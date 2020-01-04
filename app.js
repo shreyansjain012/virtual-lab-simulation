@@ -1,4 +1,4 @@
-//jshint esversion:6
+//dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -16,6 +16,30 @@ app.use(express.static('public'));
 //listens to all GET requests
 app.get('/', function(req, res) {
   res.render('index');
+});
+
+app.get('/theory', function(req, res) {
+  res.render('theory');
+});
+
+app.get('/procedure', function(req, res) {
+  res.render('procedure');
+});
+
+app.get('/prequiz', function(req, res) {
+  res.render('prequiz');
+});
+
+app.get('/simulation', function(req, res) {
+  res.render('simulation');
+});
+
+app.get('/postquiz', function(req, res) {
+  res.render('postquiz');
+});
+
+app.get('/video', function(req, res) {
+  res.render('video');
 });
 
 app.listen(3000, function() {
