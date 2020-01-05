@@ -156,12 +156,12 @@ ol.questions li {
 }
 
 ul.answers {
-    margin-left: 20px;
+    margin-left: -20px;
     margin-bottom: 20px;
 }
 
 ul.responses li {
-    margin: 10px 20px 20px;
+    margin: 10px 20px 20px -20px;
 }
 ul.responses li p span {
     display: block;

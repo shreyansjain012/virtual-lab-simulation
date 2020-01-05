@@ -745,78 +745,172 @@
 
 
 // Setup your quiz text and questions here
+function getRandList(){
+  let numOfQuestions = 5; //change this to get different number of random questions
+  let a = [0,1,2,3,4,5,6,7,8,9,10]; //total 11 questions
+  let len = a.length;
+  let randList=[];
 
+  for (let n=1; n<=numOfQuestions; n++)
+  {
+    let i = Math.floor((Math.random() * (len-n)));
+    randList.push(a[i]);
+    a[i] = a[len-n];
+  }
+  console.log(randList);
+  return randList;
+}
+
+function getQuestions(){
+  let questions = [
+    "In order to achieve the same conversion under identical reaction conditions and feed flow rate for a non-autocatalytic reaction of positive order, the volume of an ideal CSTR is",
+    "For a plug flow reactor",
+    "The conversion XA and residence time data are collected for zero order liquid phase reaction in a stirred tank reactor, which of the following will be a straight line",
+    "For a tubular reactor with space time τ and residence time θ, the following statement holds",
+    "An exothermic reaction takes place in an adiabatic reactor. The product temperature _______ the reactor feed temperature",
+    "The most unsuitable reactor for carrying out reactions in which high reactant concentration favors high yields is",
+    "A reversible liquid phase endothermic reaction is to be carried out in a plug flow reactor. For minimum reactor volume, it should be operated such that the temperature along the length",
+    "'N' plug flow reactors in series with a total volume 'V' gives the same conversion as a single plug flow reactor of volume 'V' for __________ order reactions.",
+    "The ratio of volume of mixed reactor to the volume of PFR (for identical flow rate, feed composition and conversion) for zero order reaction is",
+    "For the liquid phase zero order irreversible reaction A  B, the conversion of A in a CSTR is found to be 0.3 at a space velocity of 0.1min-1 . What will be the conversion for a PFR with a space velocity of 0.2 min-1? Assume that all the other operating conditions are the same for CSTR and PFR.",
+    "A stirred tank reactor compared to tubular-flow reactor provides"
+  ];
+
+  let options = [
+  //1
+    [
+      {"option": "always greater than that of an ideal PFR",      "correct": true},
+      {"option": "always smaller than that of an ideal PFR",     "correct": false},
+      {"option": "same as that of an ideal PFR",      "correct": false},
+      {"option": "smaller than that of an ideal PFR only for first order reaction",     "correct": false} // no comma here
+    ],
+  //2
+    [
+      {"option": "axial diffusivity is zero, radial diffusivity is zero",      "correct": false},
+      {"option": "axial diffusivity is zero, radial diffusivity is infinite",     "correct": true},
+      {"option": "axial diffusivity is infinite, radial diffusivity is zero",      "correct": false},
+      {"option": "axial diffusivity is zero, radial diffusivity is infinite",     "correct": false} // no comma here
+    ],
+  //3
+    [
+      {"option": "XA vs τ",      "correct": true},
+      {"option": "XA vs ln τ",     "correct": false},
+      {"option": "XA/(1-XA) vs τ",      "correct": false},
+      {"option": "XA(1-XA) vs τ",     "correct": false} // no comma here
+    ],
+  //4
+    [
+      {"option": "τ and θ are always equal",      "correct": false},
+      {"option": "τ = θ when the fluid density changes in the reactor",     "correct": false},
+      {"option": "τ = θ for an isothermal tubular reactor in which the density of the process fluid is constant",      "correct": true},
+      {"option": "τ = θ for a non-isothermal reactor",     "correct": false} // no comma here
+    ],
+  //5
+    [
+      {"option": "is always equal to",      "correct": false},
+      {"option": "is always greater than",     "correct": true},
+      {"option": "is always less than",      "correct": false},
+      {"option": "may be greater or less than",     "correct": false} // no comma here
+    ],
+  //6
+    [
+      {"option": "Backmix reactor",      "correct": true},
+      {"option": "Plug flow reactor",     "correct": false},
+      {"option": "Series of CSTR",      "correct": false},
+      {"option": "PFR in series",     "correct": false} // no comma here
+    ],
+  //7
+    [
+      {"option": "decreases",      "correct": false},
+      {"option": "increases",     "correct": false},
+      {"option": "is at the highest allowable temperature throughout",      "correct": true},
+      {"option": "first increases then decreases",     "correct": false} // no comma here
+    ],
+  //8
+    [
+      {"option": "first",      "correct": false},
+      {"option": "second",     "correct": false},
+      {"option": "third",      "correct": false},
+      {"option": "any",        "correct": true} // no comma here
+    ],
+  //9
+    [
+      {"option": "∞",      "correct": false},
+      {"option": "0",      "correct": false},
+      {"option": "1",      "correct": true},
+      {"option": ">1",     "correct": false} // no comma here
+    ],
+  //10
+    [
+      {"option": "0.15",     "correct": false},
+      {"option": "0.30",     "correct": false},
+      {"option": "0.60",     "correct": true},
+      {"option": "0.90",     "correct": false} // no comma here
+    ],
+  //11
+    [
+      {"option": "more uniform operating conditions.",  "correct": false},
+      {"option": "permits operation at the optimum temperature for a long reaction time.",  "correct": false},
+      {"option": "higher overall selectivity for a first order consecutive reaction.",  "correct": false},
+      {"option": "all the above", "correct": true} // no comma here
+    ],
+  ];
+
+  return [questions, options];
+}
+
+let randList = getRandList();
+let res = getQuestions();
+let ques = res[0], optn = res[1];
+let correctStr = "<p><span>That's right!</span></p>";
+let incorrectStr = "<p><span>Uhh no.</span></p>";
 // NOTE: pay attention to commas, IE struggles with those bad boys
 
 var quizJSON = {
     "info": {
-        "name":    "Test Your Knowledge!!",
-        "main":    "<p>Think you're smart enough to be on Jeopardy? Find out with this super crazy knowledge quiz!</p>",
-        "results": "<h5>Learn More</h5><p>Etiam scelerisque, nunc ac egestas consequat, odio nibh euismod nulla, eget auctor orci nibh vel nisi. Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed sit amet purus.</p>",
-        "level1":  "Jeopardy Ready",
-        "level2":  "Jeopardy Contender",
-        "level3":  "Jeopardy Amateur",
-        "level4":  "Jeopardy Newb",
-        "level5":  "Stay in school, kid..." // no comma here
+        "name":    "Self Evaluation",
+        "main":    "<p>Answer atleast 3 out of 5 questions correctly.</p>",
+        "results": "<h5>To learn More</h5><p>Go to the <a href='theory' target='_blank'>theory</a> and <a href='procedure' target='_blank'>procedure</a></p>",
+        "level1":  "Geek",
+        "level2":  "Pro",
+        "level3":  "Amateur",
+        "level4":  "Newbie",
+        "level5":  "Kiddo" // no comma here
     },
     "questions": [
         { // Question 1 - Multiple Choice, Single True Answer
-            "q": "What number is the letter A in the English alphabet?",
-            "a": [
-                {"option": "8",      "correct": false},
-                {"option": "14",     "correct": false},
-                {"option": "1",      "correct": true},
-                {"option": "23",     "correct": false} // no comma here
-            ],
-            "correct": "<p><span>That's right!</span> The letter A is the first letter in the alphabet!</p>",
-            "incorrect": "<p><span>Uhh no.</span> It's the first letter of the alphabet. Did you actually <em>go</em> to kindergarden?</p>" // no comma here
+            "q": ques[randList[0]],
+            "a": optn[randList[0]],
+            "correct": correctStr,
+            "incorrect": incorrectStr // no comma here
         },
-        { // Question 2 - Multiple Choice, Multiple True Answers, Select Any
-            "q": "Which of the following best represents your preferred breakfast?",
-            "a": [
-                {"option": "Bacon and eggs",               "correct": false},
-                {"option": "Fruit, oatmeal, and yogurt",   "correct": true},
-                {"option": "Leftover pizza",               "correct": false},
-                {"option": "Eggs, fruit, toast, and milk", "correct": true} // no comma here
-            ],
-            "select_any": true,
-            "correct": "<p><span>Nice!</span> Your cholestoral level is probably doing alright.</p>",
-            "incorrect": "<p><span>Hmmm.</span> You might want to reconsider your options.</p>" // no comma here
+        { // Question 1 - Multiple Choice, Single True Answer
+            "q": ques[randList[1]],
+            "a": optn[randList[1]],
+            "correct": correctStr,
+            "incorrect": incorrectStr // no comma here
         },
-        { // Question 3 - Multiple Choice, Multiple True Answers, Select All
-            "q": "Where are you right now? Select ALL that apply.",
-            "a": [
-                {"option": "Planet Earth",           "correct": true},
-                {"option": "Pluto",                  "correct": false},
-                {"option": "At a computing device",  "correct": true},
-                {"option": "The Milky Way",          "correct": true} // no comma here
-            ],
-            "correct": "<p><span>Brilliant!</span> You're seriously a genius, (wo)man.</p>",
-            "incorrect": "<p><span>Not Quite.</span> You're actually on Planet Earth, in The Milky Way, At a computer. But nice try.</p>" // no comma here
+        { // Question 1 - Multiple Choice, Single True Answer
+            "q": ques[randList[2]],
+            "a": optn[randList[2]],
+            "correct": correctStr,
+            "incorrect": incorrectStr // no comma here
         },
-        { // Question 4
-            "q": "How many inches of rain does Michigan get on average per year?",
-            "a": [
-                {"option": "149",    "correct": false},
-                {"option": "32",     "correct": true},
-                {"option": "3",      "correct": false},
-                {"option": "1291",   "correct": false} // no comma here
-            ],
-            "correct": "<p><span>Holy bananas!</span> I didn't actually expect you to know that! Correct!</p>",
-            "incorrect": "<p><span>Fail.</span> Sorry. You lose. It actually rains approximately 32 inches a year in Michigan.</p>" // no comma here
+        { // Question 1 - Multiple Choice, Single True Answer
+            "q": ques[randList[3]],
+            "a": optn[randList[3]],
+            "correct": correctStr,
+            "incorrect": incorrectStr // no comma here
         },
-        { // Question 5
-            "q": "Is Earth bigger than a basketball?",
-            "a": [
-                {"option": "Yes",    "correct": true},
-                {"option": "No",     "correct": false} // no comma here
-            ],
-            "correct": "<p><span>Good Job!</span> You must be very observant!</p>",
-            "incorrect": "<p><span>ERRRR!</span> What planet Earth are <em>you</em> living on?!?</p>" // no comma here
+        { // Question 1 - Multiple Choice, Single True Answer
+            "q": ques[randList[4]],
+            "a": optn[randList[4]],
+            "correct": correctStr,
+            "incorrect": incorrectStr // no comma here
         } // no comma here
     ]
 };
-$(function () {
+$(function() {
     $('#slickQuiz').slickQuiz({
         // options
     });
