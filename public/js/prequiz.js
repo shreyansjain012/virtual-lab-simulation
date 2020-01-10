@@ -870,7 +870,7 @@ var quizJSON = {
     "info": {
         "name":    "Self Evaluation",
         "main":    "<p>Answer atleast 3 out of 5 questions correctly.</p>",
-        "results": "<h5>To learn More</h5><p>Go to the <a href='theory' target='_blank'>theory</a> and <a href='procedure' target='_blank'>procedure</a></p>",
+        "results": "<p>To learn more go to the <a href='theory' target='_blank'>theory</a> and <a href='procedure' target='_blank'>procedure</a></p>",
         "level1":  "Geek",
         "level2":  "Pro",
         "level3":  "Amateur",
