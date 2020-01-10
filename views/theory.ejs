@@ -1,38 +1,37 @@
 <%- include("partials/header") -%>
 <%- include("partials/navbar") -%>
+<div class="container">
+  <h2 class="text-center">Background</h2>
+  <p>
+    In any chemical industry, there are mainly two types of flow reactors in common use. They are the Continuous Stirred Tank Reactor (CSTR) and the tubular reactors. CSTR or Mixed flow reactor (MFR) is configured much like a batch reactor except
+    reactants and products continuously flow in and out of the reactor. An ideal tubular reactor is referred to as a plug flow reactor (PFR). PFRs are frequently referred to as piston flow reactors. The key assumption is that as a plug flows through a
+    tubular reactor, the fluid is perfectly mixed in the radial direction but not in the axial direction (forward or backward).
+  </p>
 
-<h1>Background</h1>
-<p>
-  In any chemical industry, there are mainly two types of flow reactors in common use. They are the Continuous Stirred Tank Reactor (CSTR) and the tubular reactors. CSTR or Mixed flow reactor (MFR) is configured much like a batch reactor except
-  reactants and products continuously flow in and out of the reactor. An ideal tubular reactor is referred to as a plug flow reactor (PFR). PFRs are frequently referred to as piston flow reactors. The key assumption is that as a plug flows through a
-  tubular reactor, the fluid is perfectly mixed in the radial direction but not in the axial direction (forward or backward).
-</p>
+  <h2 class="text-center">Theory</h2>
+  <p>
+    The concentration of the reactants decreases progressively through the system in a plug flow reactor whereas in a mixed flow reactor the concentration drops immediately to a lower value. Because of this plug flow reactor is more efficient than a
+    mixed flow reactor for reactions whose rates increase with the reactant concentration, such as nth order irreversible reactions. When N numbers of mixed reactors are connected in series, though the concentration in each reactor is uniform, there is
+    a change in concentration when the fluid moves from reactor to reactor. This stepwise drop in concentration suggests that a large number of mixed flow reactors in series perform like a plug flow reactor.
+  </p>
 
-<h1>Theory</h1>
-<p>
-  The concentration of the reactants decreases progressively through the system in a plug flow reactor whereas in a mixed flow reactor the concentration drops immediately to a lower value. Because of this plug flow reactor is more efficient than a
-  mixed flow reactor for reactions whose rates increase with the reactant concentration, such as nth order irreversible reactions. When N numbers of mixed reactors are connected in series, though the concentration in each reactor is uniform, there is
-  a change in concentration when the fluid moves from reactor to reactor. This stepwise drop in concentration suggests that a large number of mixed flow reactors in series perform like a plug flow reactor.
-</p>
+  <p>
+    The design equation for CSTR is given by: &nbsp;
+    <img src="images/b.gif" alt="">
+  </p>
+  
 
-<p>
-  The design equation for CSTR is given by:
-</p>
-<math>
-  &tau;/C<sub>A<sub>0</sub></sub> =  V/F<sub>A<sub>0</sub></sub> =  X<sub>A</sub>/-r<sub>A</sub>
-</math>
+  <p>The design equation for PFR is given by:
+    <img style="width: 200px; height: 50px;" src="images/a.jpg" alt="">
+  </p>
+  
+  <p>
+    For a reaction whose Rate vs. Concentration curve rises monotonically (n>0), the reactors should be connected in series. They should be ordered to keep the concentration of reactant as possible if the Rate vs. Concentration curve is concave (n>1), and as low as possible if the curve is convex (n<1).
+  </p>
 
-<p>The design equation for PFR is given by:</p>
-<math>
-  &tau;/C<sub>A<sub>0</sub></sub> =  &nu;/F<sub>A<sub>0</sub></sub> =  &int;<sub>0</sub><sup>X<sub>A</sub></sup>  dX<sub>A</sub>/-r<sub>A</sub>
-</math>
-
-<p>
-  For a reaction whose Rate vs. Concentration curve rises monotonically (n>0), the reactors should be connected in series. They should be ordered to keep the concentration of reactant as possible if the Rate vs. Concentration curve is concave (n>1), and as low as possible if the curve is convex (n<1).
-</p>
-
-<img src="images/c.png" alt="">
-<img src="images/d.png" alt="">
-<img src="images/e.jpg" alt="">
-<img src="images/f.jpg" alt="">
+  <img src="images/c.png" style="width: 400px; height: 300px;" alt="">
+  <img src="images/d.png" style="width: 400px; height: 250px;" alt="">
+  <img src="images/e.jpg" style="width: 400px; height: 300px;" alt="">
+  <img src="images/f.jpg" style="width: 400px; height: 300px;" alt="">
+</div>
 <%- include("partials/footer") -%>

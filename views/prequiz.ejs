@@ -1,19 +1,22 @@
 <%- include("partials/header") -%>
 <%- include("partials/navbar") -%>
-<!-- quiz section starts -->
-<div id="slickQuiz">
-    <h1 class="quizName"></h1>
-    <div class="quizArea">
-        <div class="quizHeader">
-            <a class="startQuiz" href="">Get Started!</a>
+<div class="container">
+    <!-- quiz section starts -->
+    <div id="slickQuiz">
+        <h1 class="quizName"></h1>
+        <div class="quizArea">
+            <div class="quizHeader">
+                <a class="startQuiz" href="">Get Started!</a>
+            </div>
+        </div>
+        <div class="quizResults">
+            <h3 class="quizScore">You Scored: <span></span></h3>
+            <h3 class="quizLevel"><strong>Ranking:</strong> <span></span></h3>
+            <div class="quizResultsCopy"></div>
         </div>
     </div>
-    <div class="quizResults">
-        <h3 class="quizScore">You Scored: <span></span></h3>
-        <h3 class="quizLevel"><strong>Ranking:</strong> <span></span></h3>
-        <div class="quizResultsCopy"></div>
-    </div>
-</div>
 <!-- quiz sections ends -->
+</div>
+
 <script src="/js/prequiz.js" charset="utf-8"></script>
 <%- include("partials/footer") -%>
