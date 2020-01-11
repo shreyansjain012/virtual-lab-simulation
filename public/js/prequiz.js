@@ -17,7 +17,7 @@
             _element = '#' + $element.attr('id'),
 
             defaults = {
-                checkAnswerText:  'Check My Answer!',
+                checkAnswerText:  'Submit',
                 nextQuestionText: 'Next &raquo;',
                 backButtonText: '',
                 completeQuizText: '',
@@ -862,8 +862,8 @@ function getQuestions(){
 let randList = getRandList();
 let res = getQuestions();
 let ques = res[0], optn = res[1];
-let correctStr = "<p><span>That's right!</span></p>";
-let incorrectStr = "<p><span>Uhh no.</span></p>";
+let correctStr = "<p><span>That's correct!</span></p>";
+let incorrectStr = "<p><span>Wrong answer</span></p>";
 // NOTE: pay attention to commas, IE struggles with those bad boys
 
 var quizJSON = {

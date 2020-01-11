@@ -1,16 +1,27 @@
 * {
     font-family: Akkurat, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+.container p {
+    text-align: justify;
+}
 
 #sticky-footer {
     flex-shrink: none;
 }
+
+.theory-table {
+    margin-right: auto;
+    margin-left: auto;
+}
   
+.theory-table tr td{
+    text-align: center;
+    padding: 20px;
+}
 
-
-
-
-
+.vertical-rule {
+    border-right: 1px solid black;
+}
 
 
 /* quiz section starts*/
@@ -39,6 +50,7 @@ ol.questions li,
 ul.answers li,
 ul.responses li {
     list-style-type: none;
+
 }
 
 /* Accessibility */
@@ -120,7 +132,8 @@ ol li { list-style-type: decimal; margin-left: 20px; } */
 	text-decoration: none;
 }
 .button:hover {
-    background-color:darkslategray;
+    background-color:rgb(63, 182, 182);
+    text-decoration: none;
 }
 
 .startQuiz {
@@ -177,10 +190,10 @@ ul.responses li p span {
     font-size: 18px;
 }
 .complete ul.answers li.correct, ul.responses li.correct p span {
-    color: #6C9F2E;
+    color: green;
 }
 ul.responses li.incorrect p span {
-    color: #B5121B;
+    color: red;
 }
 
 .quizResults h3 {
