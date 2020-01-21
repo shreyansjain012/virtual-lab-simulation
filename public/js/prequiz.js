@@ -30,10 +30,10 @@
                 skipStartButton: false,
                 numberOfQuestions: null,
                 randomSortQuestions: false,
-                randomSortAnswers: false,
-                preventUnanswered: false,
+                randomSortAnswers: true,
+                preventUnanswered: true,
                 disableScore: false,
-                disableRanking: false,
+                disableRanking: true,
                 scoreAsPercentage: false,
                 perQuestionResponseMessaging: true,
                 perQuestionResponseAnswers: false,
@@ -240,7 +240,7 @@
                         } else {
                             formatQuestion = question.q;
                         }
-                        questionHTML.append('<h3>' + formatQuestion + '</h3>');
+                        questionHTML.append(formatQuestion);
 
                         // Count the number of true values
                         var truths = 0;
@@ -835,7 +835,7 @@ function getQuestions(){
     ],
   //9
     [
-      {"option": "∞",      "correct": false},
+      {"option": "Infinite",      "correct": false},
       {"option": "0",      "correct": false},
       {"option": "1",      "correct": true},
       {"option": ">1",     "correct": false} // no comma here
@@ -870,7 +870,7 @@ var quizJSON = {
     "info": {
         "name":    "Self Evaluation",
         "main":    "<p>Answer atleast 3 out of 5 questions correctly.</p>",
-        "results": "<p>To learn more go to the <a href='theory' target='_blank'>theory</a> and <a href='procedure' target='_blank'>procedure</a></p>",
+        "results": "<p>To learn more revisit <a href='theory' target='_blank'>theory</a> and <a href='procedure' target='_blank'>procedure</a></p>",
         "level1":  "Geek",
         "level2":  "Pro",
         "level3":  "Amateur",
