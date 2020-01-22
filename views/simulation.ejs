@@ -1,13 +1,23 @@
 <%- include("partials/header") -%>
 <%- include("partials/navbar") -%>
 
-<form action="/">
-    Flow rate of NaOH, F<math><sub>A</sub></math> <input type="text" name="fa"><br> <br>
-    Flow rate of Ethyl Acetate, F<math><sub>B</sub></math> <input type="text" name="fb"> <br> <br>
-    Normality of NaOH in feed tank, N<math><sub>A</sub></math> <input type="text" name="na"> <br> <br>
-    Normality of Ethyl Acetate in feed tank, N<math><sub>B</sub></math> <input type="text" name="nb"> 
-</form>
+<!-- <form action="/simulation" class="container" method="POST">
+    Flow rate of NaOH, F<math><sub>A</sub></math> <input type="range" name="fa" min="1" max="20" value="6"> <br> <br>
+    Flow rate of Ethyl Acetate, F<math><sub>B</sub></math> <input type="range" name="fb" min="1" max="20" value="20"> <br> <br>
+    Normality of NaOH in feed tank, N<math><sub>A</sub></math> <input type="range" name="na" min="1" max="20"> <br> <br>
+    Normality of Ethyl Acetate in feed tank, N<math><sub>B</sub></math> <input type="range" name="nb" min="1" max="20"> <br> <br>
+    Temperature, T <input type="range" name="temperature" min="1" max="20"> <br> <br>
+    Length of PFR, L <input type="range" name="pfrLength" min="1" max="20"> <br> <br> 
+    Diameter of PFR, D <input type="range" name="pfrDiameter" min="1" max="20"> <br> <br>
+    Volume of CSTR, V <input type="range" name="cstrVolume" min="1" max="20"> <br> <br>
+    <button type="submit">Submit</button>
+</form> -->
+
+    <canvas style="width: 400px; height: 400px;" id="myChart" >
+
+    </canvas>
 
 
+<script src="/js/makeChart.js"></script>
 
 <%- include("partials/footer") -%>

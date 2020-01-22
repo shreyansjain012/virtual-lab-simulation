@@ -2,6 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+// const chart = require(__dirname + "/public/js/conversionChart.js"); 
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -41,6 +43,7 @@ app.get('/postquiz', function(req, res) {
 app.get('/video', function(req, res) {
   res.render('video');
 });
+
 
 app.listen(3000, function() {
   console.log('Server started on port 3000');
