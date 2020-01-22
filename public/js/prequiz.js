@@ -23,7 +23,7 @@
                 completeQuizText: '',
                 tryAgainText: '',
                 questionCountText: 'Question %current of %total',
-                preventUnansweredText: 'You must select at least one answer.',
+                preventUnansweredText: 'You must select an answer.',
                 questionTemplateText:  '%count. %text',
                 scoreTemplateText: '%score / %total',
                 nameTemplateText:  '<span>Quiz: </span>%name',
@@ -765,14 +765,14 @@ function getQuestions(){
   let questions = [
     "In order to achieve the same conversion under identical reaction conditions and feed flow rate for a non-autocatalytic reaction of positive order, the volume of an ideal CSTR is",
     "For a plug flow reactor",
-    "The conversion XA and residence time data are collected for zero order liquid phase reaction in a stirred tank reactor, which of the following will be a straight line",
+    "The conversion <math>X<sub>A</sub></math> and residence time data are collected for zero order liquid phase reaction in a stirred tank reactor, which of the following will be a straight line",
     "For a tubular reactor with space time τ and residence time θ, the following statement holds",
     "An exothermic reaction takes place in an adiabatic reactor. The product temperature _______ the reactor feed temperature",
     "The most unsuitable reactor for carrying out reactions in which high reactant concentration favors high yields is",
     "A reversible liquid phase endothermic reaction is to be carried out in a plug flow reactor. For minimum reactor volume, it should be operated such that the temperature along the length",
     "'N' plug flow reactors in series with a total volume 'V' gives the same conversion as a single plug flow reactor of volume 'V' for __________ order reactions.",
     "The ratio of volume of mixed reactor to the volume of PFR (for identical flow rate, feed composition and conversion) for zero order reaction is",
-    "For the liquid phase zero order irreversible reaction A  B, the conversion of A in a CSTR is found to be 0.3 at a space velocity of 0.1min-1 . What will be the conversion for a PFR with a space velocity of 0.2 min-1? Assume that all the other operating conditions are the same for CSTR and PFR.",
+    "For the liquid phase zero order irreversible reaction A &rarr; B, the conversion of A in a CSTR is found to be 0.3 at a space velocity of 0.1min <math><sup>-1</sup></math> . What will be the conversion for a PFR with a space velocity of 0.2 min <math><sup>-1</sup></math> ? Assume that all the other operating conditions are the same for CSTR and PFR.",
     "A stirred tank reactor compared to tubular-flow reactor provides"
   ];
 
