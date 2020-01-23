@@ -157,22 +157,26 @@ ul.responses li.incorrect p span {
 
 /* simulation css starts*/
 
-
 #sim-container-1 form {
-    border: 2px solid black;
+    border: 1px solid black;
+    flex: 1;
+    padding: 10px;
 }
 
 #sim-container-1 canvas {
-    border: 2px solid black;
+    border: 1px solid black;
+    flex: 1;
+    padding: 10px;
 }
 
 #sim-container-1 input {
     width: 70px;
 }
 
-@media only screen and (min-width: 700px) {
+@media only screen and (min-width: 600px) {
     #sim-container-1 {
         display: flex;
     }   
 }
+
 /* simulation css ends */

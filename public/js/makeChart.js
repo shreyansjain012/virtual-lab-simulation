@@ -84,11 +84,10 @@ function myFunction() {
         }
     });
 
-
     // Changing color to red of input temperature
     chart.data.labels.forEach(function (item){
         if(item == temperature ){
-            chart.data.datasets[0].backgroundColor.push('#ff000080');
+            chart.data.datasets[0].backgroundColor.push('#ff0000');
         }
         else {
             chart.data.datasets[0].backgroundColor.push('#5a66d3');
