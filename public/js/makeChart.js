@@ -67,13 +67,20 @@ function myFunction() {
             datasets: [{
                 backgroundColor: [],
                 label: 'Xa vs. T',
-                borderColor: 'rgba(0,176,80,0.6)',
+                borderColor: '#5a66d362',
                 fill: false,
                 data: XaData
             }]
         },
         options: {
-          responsive: false
+          responsive: false,
+          scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
         }
     });
 
@@ -81,10 +88,10 @@ function myFunction() {
     // Changing color to red of input temperature
     chart.data.labels.forEach(function (item){
         if(item == temperature ){
-            chart.data.datasets[0].backgroundColor.push('#35024e');
+            chart.data.datasets[0].backgroundColor.push('#ff000080');
         }
         else {
-            chart.data.datasets[0].backgroundColor.push('rgb(0,176,80)');
+            chart.data.datasets[0].backgroundColor.push('#5a66d3');
         }
         chart.update();
     });   
