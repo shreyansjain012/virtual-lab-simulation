@@ -1,22 +1,24 @@
 <%- include("partials/header") -%>
 <%- include("partials/navbar") -%>
 
-<!-- <form action="/simulation" class="container" method="POST">
-    Flow rate of NaOH, F<math><sub>A</sub></math> <input type="range" name="fa" min="1" max="20" value="6"> <br> <br>
-    Flow rate of Ethyl Acetate, F<math><sub>B</sub></math> <input type="range" name="fb" min="1" max="20" value="20"> <br> <br>
-    Normality of NaOH in feed tank, N<math><sub>A</sub></math> <input type="range" name="na" min="1" max="20"> <br> <br>
-    Normality of Ethyl Acetate in feed tank, N<math><sub>B</sub></math> <input type="range" name="nb" min="1" max="20"> <br> <br>
-    Temperature, T <input type="range" name="temperature" min="1" max="20"> <br> <br>
-    Length of PFR, L <input type="range" name="pfrLength" min="1" max="20"> <br> <br> 
-    Diameter of PFR, D <input type="range" name="pfrDiameter" min="1" max="20"> <br> <br>
-    Volume of CSTR, V <input type="range" name="cstrVolume" min="1" max="20"> <br> <br>
-    <button type="submit">Submit</button>
-</form> -->
-
-    <canvas style="width: 400px; height: 400px;" id="myChart" >
-
+<div id="sim-container-1">
+    <form class="container">
+        Flow rate of NaOH,                        F<math><sub>A</sub></math> &nbsp;        <input type="number" step="0.1" name="fa" min="1" max="20" value="12"> LPH   <br> <br>
+        Flow rate of Ethyl Acetate,               F<math><sub>B</sub></math> &nbsp;        <input type="number" step="0.1" name="fb" min="1" max="20" value="12"> LPH   <br> <br>
+        Normality of NaOH in feed tank,           N<math><sub>A</sub></math> &nbsp;        <input type="number" step="0.1" name="na" min="0" value="0.1">  N          <br> <br>
+        Normality of Ethyl Acetate in feed tank,  N<math><sub>B</sub></math> &nbsp;        <input type="number" step="0.1" name="nb" min="0" value="0.1">  N          <br> <br>
+        Temperature, T     &nbsp; <input type="range" name="temperature" min="20" max="50"> &deg;C <br> <br> 
+        Length of PFR, L   &nbsp; <input type="number" name="pfrLength" min="0" step="1" value="1"> m <br> <br> 
+        Diameter of PFR, D &nbsp; <input id="myText" type="number" name="pfrDiameter" min="0" step="0.1" value="3.5"> cm <br> <br>
+        <!-- Volume of CSTR, V <input type="range" name="cstrVolume" min="1" max="20"> <br> <br> -->
+        <button type="button" class="button">Submit</button>
+    </form>
+    
+    <canvas style="min-width: 450px; height: auto; margin-right: auto; margin-left: auto;" id="myChart" >
+    
     </canvas>
-
+    
+</div>
 
 <script src="/js/makeChart.js"></script>
 

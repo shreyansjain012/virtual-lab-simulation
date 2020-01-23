@@ -65,62 +65,8 @@ ul.responses li {
     width: 1px;
 }
 
-/* QUIZ STYLES */
-/* Styles to prettify the quiz page */
-/* 
-html {
-    background: #eee;
-}
-
-body {
-    width: 800px;
-    margin: 0 auto;
-    border: 2px solid #ccc;
-    border-top: none;
-    background: #fff;
-    padding: 20px;
-    font-family: Trebuchet, Arial,Helvetica,sans-serif;
-    font-size: 16px;
-    color: #353535;
-    line-height: 1.5em;
-}
-
-h1,h2,h3,h4,h5,h6 {font-weight: bold;}
-
-h1 {
-    font-size: 26px;
-    margin: 0 0 20px;
-    color: #0C4569;
-}
-h2 {
-    font-size: 22px;
-    margin: 15px 0;
-}
-h3 {
-    font-size: 18px;
-    margin: 15px 0 10px;
-}
-h4 {
-    font-size: 16px;
-    margin: 10px 0;
-}
-h5 {
-    font-size: 14px;
-    margin: 10px 0 5px;
-}
-h6 {
-    font-size: 12px;
-    margin: 5px 0;
-}
-
-strong { font-weight: bold; }
-em { font-style: italic; }
-ul { list-style-type: circle; }
-ol { list-style-type: decimal; }
-ol li { list-style-type: decimal; margin-left: 20px; } */
-
 .button {
-    float: left;
+    /* float: left; */
     width: auto;
     padding: 5px 15px;
     color:#ffffff;
@@ -208,3 +154,26 @@ ul.responses li.incorrect p span {
     margin-top: 20px;
 }
 /* quiz section ends */
+
+
+/* simulation css starts*/
+
+
+#sim-container-1 form {
+    border: 2px solid black;
+}
+
+#sim-container-1 canvas {
+    border: 2px solid black;
+}
+
+#sim-container-1 input {
+    width: 70px;
+}
+
+@media only screen and (min-width: 700px) {
+    #sim-container-1 {
+        display: flex;
+    }   
+}
+/* simulation css ends */

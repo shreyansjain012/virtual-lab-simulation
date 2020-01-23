@@ -1,24 +1,33 @@
+
+
+
+ console.log(document.getElementById("myText").value);
+ 
+
+
+
+
+
 let myChart = document.getElementById('myChart').getContext('2d');
 
 const pi = Math.PI;
 
 // Kinetic data for saponification of ethyl acetate
-let A = 3.23 * Math.pow(10,7); // Frequency factor (L/mol.s)
-let Ea = 11.55; // Activation energy (Kcal/mol)
-let R = 8.314 // Si units
-var Fa = 12, Fb = 12, Na = 0.1, Nb = 0.1;
+let A = 3.23 * Math.pow(10,7); // Frequency factor (m3/mol.s)
+let Ea = 48325.2; // Activation energy (Joule/mol)
+let R = 8.314 // SI units
+var Fa = 12/(60*60), Fb = 12/(60*60), Na = 0.1, Nb = 0.1;
 
 // change variables
 
-function getRateConstant (T) {
+function rateConstant (T) {
     // Arrhenius equation
-    T = T + 273.15;
     return A*Math.exp(-Ea/(R*T)); 
 }
 
-function getPFRVolume () {
+function pfrVol () {
     let d = 3.5/100, l = 1;
-    return pi * Math.pow(d,2) * l / 4; // v1 =  ko hata
+    return pi * Math.pow(d,2) * l / 4 * 1000; 
 }
 
 function getCa0 (){
@@ -31,18 +40,15 @@ function getCb0 (){
     return Fb * Nb / (Fa + Fb);
 }
 
-let mydata = [];
-
-for(var t = 1; t<=100; t++){
-    let dataPoint = {};
-    dataPoint.x = t;
-    let k = getRateConstant(t);
-    let v1 = getPFRVolume();
+let tempData = [], XaData = [];
+for(let t = 298; t<=313; t++){
+    tempData.push(t);
+    let k = rateConstant(t);
+    let v1 = pfrVol(); 
     let Ca0 = getCa0();
     let Cb0 = getCb0();
     let M = Cb0/Ca0;
     let tau1 = v1 / (Fa + Fb);
-    let Xa1 = -1;
     if(M > 1) {
         let theta = Math.exp(k*tau1*Ca0*(M-1));
         Xa1 = ((theta - 1) * M)/(theta*M - 1);
@@ -50,21 +56,20 @@ for(var t = 1; t<=100; t++){
     else if(M === 1){
         Xa1  = (k*Ca0*tau1)/(1 + k*Ca0*tau1 );
     }
-    dataPoint.y = Xa1;
-    mydata.push(dataPoint);
-    console.log(dataPoint);
+    XaData.push(Xa1);
 }
-console.log(mydata);
-
 
 let chart = new Chart(myChart, {
-    type: 'scatter',
+    type: 'line',
     data: {
+        labels: tempData,
         datasets: [{
-        label: 'Scatter Dataset',
-        data: mydata,
-        backgroundColor: 'rgba(54,162,235,0.6)'
-      }]
+            label: 'Xa vs. T',
+            backgroundColor: 'rgb(0,176,80)',
+            borderColor: 'rgba(0,176,80,0.6)',
+            fill: false,
+            data: XaData
+        }]
     },
     options: {
       responsive: false
