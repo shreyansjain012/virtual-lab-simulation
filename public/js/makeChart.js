@@ -38,6 +38,8 @@ function myFunction() {
     const temperature = Number(document.getElementById('temperature').value);
     const minTemp = Number(document.getElementById('temperature').min);
     const maxTemp = Number(document.getElementById('temperature').max);
+    const v2 = Number(document.getElementById('cstrVolume').value);
+
     
     // converting LPH in LPS
     Fa = Fa/(60*60);
@@ -48,23 +50,43 @@ function myFunction() {
     const len = maxTemp - minTemp + 1;
 
     for(let T = minTemp; T<=maxTemp; T++){
-        tempData.push(T);
+        // solving for pfr
         let k = rateConstant(A, Ea, R, T);
         let v1 = pfrVol(d, l); 
         let Ca0 = getCa0(Fa, Fb, Na, Nb);
         let Cb0 = getCb0(Fa, Fb, Na, Nb);
         let M = Cb0/Ca0;
         let tau1 = v1 / (Fa + Fb);
-        if(M > 1) {
+        let Xa1 = -1, Xa2 = -1;
+        if(M < 1) {
             let theta = Math.exp(k*tau1*Ca0*(M-1));
             Xa1 = ((theta - 1) * M)/(theta*M - 1);
         }
         else if(M === 1){
             Xa1  = (k*Ca0*tau1)/(1 + k*Ca0*tau1 );
         }
-        XaData.push(Xa1);
+        else{
+            alert('Flow rate of NaoH cannot be less than flow rate of Ethyl Acetate');
+            break;
+        }
+        // solving for cstr
+        let tau2 = v2 / (Fa + Fb);
+        
+        let c1 = (M+1)+1/(k*tau2*Ca0);
+        let c2 = M + Xa1/(k*tau2*Ca0);
+        let res1 = (c1 + Math.sqrt(c1*c1 - 4*c2))/2;
+        let res2 = (c1 - Math.sqrt(c1*c1 - 4*c2))/2;
+        if(res1 > Xa1 && res1 <= 1){
+            Xa2 = res1;
+        }
+        else {
+            Xa2 = res2;
+        }
+        console.log("Xa1: " + Xa1 + " Xa2: " + Xa2);
+        
+        tempData.push(T);
+        XaData.push(Xa2);
     }
-    
     let chart = new Chart(myChart, {
         type: 'line',
         data: {
@@ -92,7 +114,7 @@ function myFunction() {
 
     // Changing input temperature color to red and increasing its radius to 5  
     let index = chart.data.labels.indexOf(temperature);
-    chart.data.datasets[0].backgroundColor[index] = '#ff0000';
+    chart.data.datasets[0].backgroundColor[index] = 'darkblue';
     chart.data.datasets[0].pointRadius[index] = 5;    
     chart.update();
 }
