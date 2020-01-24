@@ -24,25 +24,30 @@ function getCb0 (Fa, Fb, Na, Nb){
 
 function myFunction() {
     // Kinetic data for saponification of ethyl acetate
-    let A = 3.23 * Math.pow(10,7); // Frequency factor (L/mol.s)
-    let Ea = 48325.2; // Activation energy (Joule/mol)
-    let R = 8.314 // SI units
+    const A = 3.23 * Math.pow(10,7); // Frequency factor (L/mol.s)
+    const Ea = 48325.2; // Activation energy (Joule/mol)
+    const R = 8.314 // SI units
     
     // Input data
     let Fa = document.getElementById("fa").value;
     let Fb = document.getElementById("fb").value;
-    let Na = document.getElementById("na").value;
-    let Nb = document.getElementById("nb").value;
-    let d = document.getElementById("pfrDiameter").value;
-    let l = document.getElementById("pfrLength").value;
-    let temperature = document.getElementById('temperature').value;
+    const Na = document.getElementById("na").value;
+    const Nb = document.getElementById("nb").value;
+    const d = document.getElementById("pfrDiameter").value;
+    const l = document.getElementById("pfrLength").value;
+    const temperature = Number(document.getElementById('temperature').value);
+    const minTemp = Number(document.getElementById('temperature').min);
+    const maxTemp = Number(document.getElementById('temperature').max);
+    
     // converting LPH in LPS
     Fa = Fa/(60*60);
     Fb = Fb/(60*60);
 
     // Creating dataset for chart
-    let tempData = [], XaData = [];
-    for(let T = 25; T<=40; T++){
+    const tempData = [], XaData = [];
+    const len = maxTemp - minTemp + 1;
+
+    for(let T = minTemp; T<=maxTemp; T++){
         tempData.push(T);
         let k = rateConstant(A, Ea, R, T);
         let v1 = pfrVol(d, l); 
@@ -65,11 +70,12 @@ function myFunction() {
         data: {
             labels: tempData,
             datasets: [{
-                backgroundColor: [],
-                label: 'Xa vs. T',
-                borderColor: '#5a66d362',
+                backgroundColor: new Array(len).fill('darkcyan'),
+                borderColor: 'rgb(63, 182, 182)',
                 fill: false,
-                data: XaData
+                data: XaData,
+                label: 'Xa vs. T',
+                pointRadius: new Array(len).fill(3)
             }]
         },
         options: {
@@ -84,14 +90,9 @@ function myFunction() {
         }
     });
 
-    // Changing color to red of input temperature
-    chart.data.labels.forEach(function (item){
-        if(item == temperature ){
-            chart.data.datasets[0].backgroundColor.push('#ff0000');
-        }
-        else {
-            chart.data.datasets[0].backgroundColor.push('#5a66d3');
-        }
-        chart.update();
-    });   
+    // Changing input temperature color to red and increasing its radius to 5  
+    let index = chart.data.labels.indexOf(temperature);
+    chart.data.datasets[0].backgroundColor[index] = '#ff0000';
+    chart.data.datasets[0].pointRadius[index] = 5;    
+    chart.update();
 }
