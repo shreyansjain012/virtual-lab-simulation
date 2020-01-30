@@ -1,6 +1,7 @@
 let myChart = document.getElementById('myChart').getContext('2d');
 const pi = Math.PI;
 
+
 function rateConstant (A,Ea,R,T) {
     // Arrhenius equation
     T = T + 273;
@@ -22,6 +23,54 @@ function getCb0 (Fa, Fb, Na, Nb){
     return Fb * Nb / (Fa + Fb);
 }
 
+function cstrEqn (k, Ca0, Cb0, tau2, Xa1) {
+    let M = Cb0/Ca0;
+    let a = 1;
+    let b = (M+1)+1/(k*tau2*Ca0);
+    let c = M + Xa1/(k*tau2*Ca0);
+    
+    let res1 = (b + Math.sqrt(b*b - 4*a*c))/(2*a);
+    let res2 = (b - Math.sqrt(b*b - 4*a*c))/(2*a);
+
+    if(res1 > Xa1 && res1 <= 1){
+        return res1;
+    }
+    else {
+        return res2;
+    }
+}
+
+function pfrEqn (k, Ca0, Cb0, tau1, Xa1) {
+    let M = Cb0/Ca0;
+    console.log('k = ' + k + ' Ca0 = ' + Ca0 + ' Cb0 = ' + Cb0 + ' tau1 = ' + tau1 + ' M = ' + M);
+    if(M < 1){
+        let a = (M - Xa1) * Math.exp(k*tau1*Ca0*(M-1)) - (1 - Xa1) * M;  
+        let b = (M - Xa1) * Math.exp(k*tau1*Ca0*(M-1)) - (1 - Xa1);
+        return a/b;
+    } 
+    else if(M === 1){
+        let a = (k*tau1*Ca0)*(1-Xa1) + Xa1;
+        let b = 1 + k*tau1*Ca0*(1-Xa1);
+        return a/b
+        
+    }
+    else {
+        console.log('Flow rate of NaoH cannot be less than flow rate of Ethyl Acetate');
+    }
+}
+
+let reactorList = [];
+
+function addpfr() {
+    reactorList.push('pfr');
+}
+
+function addcstr(){
+    reactors.push('cstr');
+}
+
+
+
 function myFunction() {
     // Kinetic data for saponification of ethyl acetate
     const A = 3.23 * Math.pow(10,7); // Frequency factor (L/mol.s)
@@ -29,16 +78,16 @@ function myFunction() {
     const R = 8.314 // SI units
     
     // Input data
-    let Fa = document.getElementById("fa").value;
-    let Fb = document.getElementById("fb").value;
-    const Na = document.getElementById("na").value;
-    const Nb = document.getElementById("nb").value;
-    const d = document.getElementById("pfrDiameter").value;
-    const l = document.getElementById("pfrLength").value;
-    const temperature = Number(document.getElementById('temperature').value);
-    const minTemp = Number(document.getElementById('temperature').min);
-    const maxTemp = Number(document.getElementById('temperature').max);
-    const v2 = Number(document.getElementById('cstrVolume').value);
+    let Fa = Number(document.getElementById("fa").value);
+    let Fb = Number(document.getElementById("fb").value);
+    let Na = Number(document.getElementById("na").value);
+    let Nb = Number(document.getElementById("nb").value);
+    let d = Number(document.getElementById("pfrDiameter").value);
+    let l = Number(document.getElementById("pfrLength").value);
+    let temperature = Number(document.getElementById('temperature').value);
+    let minTemp = Number(document.getElementById('temperature').min);
+    let maxTemp = Number(document.getElementById('temperature').max);
+    let v2 = Number(document.getElementById('cstrVolume').value);
 
     
     // converting LPH in LPS
@@ -49,44 +98,46 @@ function myFunction() {
     const tempData = [], XaData = [];
     const len = maxTemp - minTemp + 1;
 
+    var myReactor;
+    const reactorType = document.getElementsByName('reactor-type');
+    for(let i = 0; i < reactorType.length; i++) {
+        if(reactorType[i].checked) {
+            myReactor = reactorType[i].value;
+        }
+    }
+
     for(let T = minTemp; T<=maxTemp; T++){
+        let Xa1 = 0;
         // solving for pfr
         let k = rateConstant(A, Ea, R, T);
         let v1 = pfrVol(d, l); 
         let Ca0 = getCa0(Fa, Fb, Na, Nb);
         let Cb0 = getCb0(Fa, Fb, Na, Nb);
-        let M = Cb0/Ca0;
         let tau1 = v1 / (Fa + Fb);
-        let Xa1 = -1, Xa2 = -1;
-        if(M < 1) {
-            let theta = Math.exp(k*tau1*Ca0*(M-1));
-            Xa1 = ((theta - 1) * M)/(theta*M - 1);
-        }
-        else if(M === 1){
-            Xa1  = (k*Ca0*tau1)/(1 + k*Ca0*tau1 );
-        }
-        else{
-            alert('Flow rate of NaoH cannot be less than flow rate of Ethyl Acetate');
-            break;
-        }
-        // solving for cstr
         let tau2 = v2 / (Fa + Fb);
-        
-        let c1 = (M+1)+1/(k*tau2*Ca0);
-        let c2 = M + Xa1/(k*tau2*Ca0);
-        let res1 = (c1 + Math.sqrt(c1*c1 - 4*c2))/2;
-        let res2 = (c1 - Math.sqrt(c1*c1 - 4*c2))/2;
-        if(res1 > Xa1 && res1 <= 1){
-            Xa2 = res1;
+
+        switch (myReactor) {
+            case 'pfr':
+                Xa1 = pfrEqn(k, Ca0, Cb0, tau1, Xa1);
+                break;
+            case 'cstr':
+                Xa1 = cstrEqn (k, Ca0, Cb0, tau2, Xa1);
+                break;
+            case 'cstr-pfr':
+                Xa1 = cstrEqn (k, Ca0, Cb0, tau2, Xa1);
+                Xa1 = pfrEqn(k, Ca0, Cb0, tau1, Xa1);
+                break;
+            case 'pfr-cstr':
+                Xa1 = pfrEqn(k, Ca0, Cb0, tau1, Xa1);
+                Xa1 = cstrEqn (k, Ca0, Cb0, tau2, Xa1);
+                break;
         }
-        else {
-            Xa2 = res2;
-        }
-        console.log("Xa1: " + Xa1 + " Xa2: " + Xa2);
-        
+        console.log('Xa2: ' + Xa1);
+        // showCalculation();
         tempData.push(T);
-        XaData.push(Xa2);
+        XaData.push(Xa1);       
     }
+
     let chart = new Chart(myChart, {
         type: 'line',
         data: {

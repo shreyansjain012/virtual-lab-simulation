@@ -11,7 +11,7 @@
         Length of PFR, L   &nbsp; <input class="input-style" id="pfrLength" type="number" name="pfrLength" min="0" step="1" value="1"> m <br>  
         Diameter of PFR, D &nbsp; <input class="input-style" id="pfrDiameter" type="number" name="pfrDiameter" min="0" step="0.01" value="3.5"> cm <br> 
         Volume of CSTR, V  &nbsp; <input class="input-style" id="cstrVolume" type="number" name="cstrVolume" min="0" step="0.01" value="0.97"> L<br>
-<!--         
+        
         Type of reactor
         <input class="input-radio" type="radio" name="reactor-type" id="pfr" value="pfr"> 
         PFR
@@ -21,8 +21,9 @@
         PFR-CSTR
         <input class="input-radio" type="radio" name="reactor-type" id="cstr-pfr" value="cstr-pfr">
         CSTR-PFR
-        <br> -->
+        <br>
         <button type="button" class="button" onclick="myFunction()">Submit</button>
+        <button type="button" class="button" onclick="showCalculation()"><a style="color: white;" href="/calculation">Show Calculation</a></button>
     </form>
     
     <canvas class="container" style="max-height:400px; height: auto; margin-right: auto; margin-left: auto;" id="myChart" >
