@@ -1,9 +1,29 @@
 <%- include("partials/header") -%>
 <%- include("partials/navbar") -%>
-<div id="calculation" class="container">
-    <button id="pfr-menu" class="button" type="button">PFR</button>
-    <button id="cstr-menu" class="button" type="button">CSTR</button>
-</div>
+<div class="container">
+        <button id="pfr-menu" class="button" type="button">PFR</button>
+        <button id="cstr-menu" class="button" type="button">CSTR</button>
+        <button id="cstr-menu" class="button" type="button">Create reactor</button>
 
+        <div id="menu" class="menu">
+                Flow rate of NaOH,                        F<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="fa" type="number" step="0.1" name="fa" min="1" max="20" value="12"> LPH   <br> 
+                Flow rate of Ethyl Acetate,               F<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="fb" type="number" step="0.1" name="fb" min="1" max="20" value="12"> LPH   <br> 
+                Normality of NaOH in feed tank,           N<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="na" type="number" step="0.1" name="na" min="0" value="0.1">  N          <br>
+                Normality of Ethyl Acetate in feed tank,  N<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="nb" type="number" step="0.1" name="nb" min="0" value="0.1">  N          <br> 
+                <!-- Temperature, T     &nbsp; <input class="input-style" id="temperature" type="range" name="temperature" min="25" max="40" value="25"> &deg;C <br>  -->
+                <div id="cstr-config">
+                        Volume of CSTR, V  &nbsp; <input class="input-style" id="cstrVol" type="number" name="cstrVol" min="0" step="0.01" value="0.97"> L<br>
+                </div>
+                <div id="pfr-config">
+                        Length of PFR, L   &nbsp; <input class="input-style" id="pfrLen" type="number" name="pfrLen" min="0" step="1" value="1"> m <br>
+                        Diameter of PFR, D &nbsp; <input class="input-style" id="pfrDia" type="number" name="pfrDia" min="0" step="0.01" value="3.5"> cm <br>
+                </div>
+                <button id="add-reactor" class="button" type="button">Add</button>
+        </div>
+        <div class="reactor-display">
+        <!-- to remove the margins between pipe and reactors </div is left open and closed in next line -->      
+        </div>
+
+</div>
 <script src="/js/reactor.js"></script>
 <%- include("partials/footer") -%>

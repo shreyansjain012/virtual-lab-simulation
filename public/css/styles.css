@@ -185,3 +185,47 @@ ul.responses li.incorrect p span {
 }
 
 /* simulation css ends */
+
+/* New simulation css starts*/
+.menu {
+    display:none;
+}
+
+.pipe {
+    background-color: rgba(99, 100, 109, 0.404);
+    border: 1px solid rgb(99, 100, 109);
+    border-right-style:none;
+    border-left-style: none;
+    display: inline-block;
+    height: 10px;
+    margin: 10px 0px;
+    vertical-align: middle;
+    width: 20px;
+}
+
+.reactor {
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    height: 50px;
+    margin: 10px 0px;
+    vertical-align: middle;
+    width: 70px;
+    text-align: center;
+    line-height: 40px;
+}
+
+.pink{
+    background-color: rgba(219, 112, 148, 0.699);
+    border: 2px solid #DB7093;
+}
+
+.blue {
+    background-color: rgba(30, 50, 230, 0.61);
+    border: 2px solid rgb(30, 50, 230);
+}
+
+.reactor-display {
+    margin-top: 40px;
+}
+/* New simulation css ends */
