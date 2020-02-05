@@ -189,6 +189,7 @@ ul.responses li.incorrect p span {
 /* New simulation css starts*/
 .menu {
     min-height: 324px;
+    min-width: 500px;
 }
 
 .pipe {
@@ -230,12 +231,18 @@ ul.responses li.incorrect p span {
     margin-top: 40px;
 }
 
-.default-margin {
-    margin: 8px;
-}
-
 .hide {
     display: none;
+}
+
+#cstr-config,
+#pfr-config {
+    min-height: 125px;
+}
+
+#pfr-btn,
+#cstr-btn {
+    float: right;
 }
 
 /* New simulation css ends */

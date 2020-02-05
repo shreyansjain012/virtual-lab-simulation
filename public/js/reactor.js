@@ -131,10 +131,9 @@ $(function(){
         $('#init-params').hide();
         $('#cstr-config').fadeIn();
         $('#pfr-config').fadeIn();
+        $('#draw-btn').show();
         $(this).hide();
         console.log(Xa1);
-        
-
     });
 
     $('#pfr-btn').click(function(){
