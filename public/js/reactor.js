@@ -127,13 +127,10 @@ $(function(){
         k = rateConstant(A, Ea, R, temperature);
         Ca0 = getCa0(Fa, Fb, Na, Nb);
         Cb0 = getCb0(Fa, Fb, Na, Nb);
-        console.log(Fa, Fb, Na, Nb, temperature, k, Ca0, Cb0);
-        $('#init-params').hide();
-        $('#cstr-config').fadeIn();
-        $('#pfr-config').fadeIn();
-        $('#draw-btn').show();
-        $(this).hide();
-        console.log(Xa1);
+        
+        $('#menu-1').hide();
+        $('#menu-2').fadeIn();
+        
     });
 
     $('#pfr-btn').click(function(){
