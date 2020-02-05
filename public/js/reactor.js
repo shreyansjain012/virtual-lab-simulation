@@ -78,7 +78,7 @@ function pfr (k, Ca0, Cb0, tau1, Xa1) {
     else if(M === 1){
         let a = (k*tau1*Ca0)*(1-Xa1) + Xa1;
         let b = 1 + k*tau1*Ca0*(1-Xa1);
-        return a/b
+        return a/b;
         
     }
     else {
@@ -116,79 +116,63 @@ function cstr (k, Ca0, Cb0, tau2, Xa1) {
 
 $(function(){
     let reactorType, newStr, Xa1=0;
-    $('#pfr-menu').click(function(){
+    let Fa, Fb, Na, Nb, k, temperature, Ca0, Cb0;
+
+    $('#next-btn').click(function (){
+        Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
+        Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
+        Na = Number(document.getElementById("na").value);
+        Nb = Number(document.getElementById("nb").value);
+        temperature =  Number(document.getElementById("temperature").value);
+        k = rateConstant(A, Ea, R, temperature);
+        Ca0 = getCa0(Fa, Fb, Na, Nb);
+        Cb0 = getCb0(Fa, Fb, Na, Nb);
+        console.log(Fa, Fb, Na, Nb, temperature, k, Ca0, Cb0);
+        $('#init-params').hide();
+        $('#cstr-config').fadeIn();
+        $('#pfr-config').fadeIn();
+        $(this).hide();
+        console.log(Xa1);
+        
+
+    });
+
+    $('#pfr-btn').click(function(){
         reactorType = 'PFR';
-        $('#menu').hide().fadeIn();
-        $('#cstr-config').hide();
-        $('#pfr-config').show();
+        let d, l, v1, tau1;
         newStr = '<div class="pipe"></div><div class="reactor blue">'+ reactorType +'</div><div class="pipe"></div>';
+
+        d = Number(document.getElementById("pfrDia").value);
+        l = Number(document.getElementById("pfrLen").value);
+        v1 = pfrVol(d, l); 
+        tau1 = v1 / (Fa + Fb);
+        Xa1 = pfr(k, Ca0, Cb0, tau1, Xa1);
+
+        console.log(d,l,v1,tau1,Xa1);
+        $('.reactor-display').html(pipe(newStr)).hide().fadeIn();
     });
     
-    $('#cstr-menu').click(function(){
+    $('#cstr-btn').click(function(){
         reactorType = 'CSTR';
-        $('#menu').hide().fadeIn();
-        $('#pfr-config').hide();
-        $('#cstr-config').show();
+        let v2, tau2;
         newStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>';
-
-    });
-
-    $('#add-reactor').click(function(){
+        console.log(reactorType);
+        v2 = Number(document.getElementById('cstrVol').value);
+        tau2 = v2 / (Fa + Fb);
+        Xa1 = cstr (k, Ca0, Cb0, tau2, Xa1);
+        
+        console.log(v2, tau2, Xa1);
         $('.reactor-display').html(pipe(newStr)).hide().fadeIn();
-        const temperature = 25;
-        
-        let Fa, Fb, Na, Nb, d, l, k, v1, v2, Ca0, Cb0, tau1, tau2;
-        
-        switch (reactorType) {
-            case 'PFR':
-                console.log(reactorType);
-                Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
-                Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
-                Na = Number(document.getElementById("na").value);
-                Nb = Number(document.getElementById("nb").value);
-                d = Number(document.getElementById("pfrDia").value);
-                l = Number(document.getElementById("pfrLen").value);
-                k = rateConstant(A, Ea, R, temperature);
-                v1 = pfrVol(d, l); 
-                Ca0 = getCa0(Fa, Fb, Na, Nb);
-                Cb0 = getCb0(Fa, Fb, Na, Nb);
-                tau1 = v1 / (Fa + Fb);
-
-                Xa1 = pfr(k, Ca0, Cb0, tau1, Xa1);
-                break;
-
-            case 'CSTR':
-                console.log(reactorType);
-                Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
-                Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
-                Na = Number(document.getElementById("na").value);
-                Nb = Number(document.getElementById("nb").value);
-                v2 = Number(document.getElementById('cstrVol').value);
-                k = rateConstant(A, Ea, R, temperature);
-                Ca0 = getCa0(Fa, Fb, Na, Nb);
-                Cb0 = getCb0(Fa, Fb, Na, Nb);
-                tau2 = v2 / (Fa + Fb);
-
-                Xa1 = cstr (k, Ca0, Cb0, tau2, Xa1);
-                break;
-
-            default:
-                console.log('Invalid reactor');
-                break;
-        }
-
-        console.log(Xa1);  
     });
+
 });
 
 let str = '';
 function pipe(newStr) {
-    str = str+ newStr;
+    str = str + newStr;
     return str;
 }
 
-// range of tau2 and tau1
 // show dataset for Xa vs tau
 // show graph of Xa vs tau for 1 temperature
 // show graph of Xa vs tau for 3 different temperatures
-// Do something for temperature

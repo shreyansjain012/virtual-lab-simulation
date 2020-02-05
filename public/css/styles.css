@@ -188,7 +188,6 @@ ul.responses li.incorrect p span {
 
 /* New simulation css starts*/
 .menu {
-    display:none;
     min-height: 324px;
 }
 
@@ -230,4 +229,13 @@ ul.responses li.incorrect p span {
 .reactor-display {
     margin-top: 40px;
 }
+
+.default-margin {
+    margin: 8px;
+}
+
+.hide {
+    display: none;
+}
+
 /* New simulation css ends */
