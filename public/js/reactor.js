@@ -134,7 +134,7 @@ $(function(){
     });
 
     $('#add-reactor').click(function(){
-        $('.reactor-display').html(pipe(newStr));
+        $('.reactor-display').html(pipe(newStr)).hide().fadeIn();
         const temperature = 25;
         
         let Fa, Fb, Na, Nb, d, l, k, v1, v2, Ca0, Cb0, tau1, tau2;
@@ -186,3 +186,9 @@ function pipe(newStr) {
     str = str+ newStr;
     return str;
 }
+
+// range of tau2 and tau1
+// show dataset for Xa vs tau
+// show graph of Xa vs tau for 1 temperature
+// show graph of Xa vs tau for 3 different temperatures
+// Do something for temperature
