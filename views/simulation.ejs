@@ -1,36 +1,42 @@
 <%- include("partials/header") -%>
 <%- include("partials/navbar") -%>
 
-<div id="sim-container-1">
-    <form class="container">
-        Flow rate of NaOH,                        F<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="fa" type="number" step="0.1" name="fa" min="1" max="20" value="12"> LPH   <br> 
-        Flow rate of Ethyl Acetate,               F<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="fb" type="number" step="0.1" name="fb" min="1" max="20" value="12"> LPH   <br> 
-        Normality of NaOH in feed tank,           N<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="na" type="number" step="0.1" name="na" min="0" value="0.1">  N          <br>
-        Normality of Ethyl Acetate in feed tank,  N<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="nb" type="number" step="0.1" name="nb" min="0" value="0.1">  N          <br> 
-        Temperature, T     &nbsp; <input class="input-style" id="temperature" type="range" name="temperature" min="25" max="40" value="25"> &deg;C <br> 
-        Length of PFR, L   &nbsp; <input class="input-style" id="pfrLength" type="number" name="pfrLength" min="0" step="1" value="1"> m <br>  
-        Diameter of PFR, D &nbsp; <input class="input-style" id="pfrDiameter" type="number" name="pfrDiameter" min="0" step="0.01" value="3.5"> cm <br> 
-        Volume of CSTR, V  &nbsp; <input class="input-style" id="cstrVolume" type="number" name="cstrVolume" min="0" step="0.01" value="0.97"> L<br>
-        
-        Type of reactor
-        <input class="input-radio" type="radio" name="reactor-type" id="pfr" value="pfr"> 
-        PFR
-        <input class="input-radio" type="radio" name="reactor-type" id="cstr" value="cstr"> 
-        CSTR
-        <input class="input-radio" type="radio" name="reactor-type" id="pfr-cstr" value="pfr-cstr">
-        PFR-CSTR
-        <input class="input-radio" type="radio" name="reactor-type" id="cstr-pfr" value="cstr-pfr">
-        CSTR-PFR
-        <br>
-        <button type="button" class="button" onclick="myFunction()">Submit</button>
-    </form>
-    
-    <canvas class="container" style="max-height:400px; height: auto; margin-right: auto; margin-left: auto;" id="myChart" >
-    
-    </canvas>
-    
+<div id="sim-container-1" class="container">
+        <div id="menu" class="menu border p-1">
+                <div id="menu-1">
+                        Flow rate of NaOH,                        F<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="fa" type="number" step="0.1" name="fa" min="1" max="20" value="12"> LPH   <br> 
+                        Flow rate of Ethyl Acetate,               F<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="fb" type="number" step="0.1" name="fb" min="1" max="20" value="12"> LPH   <br> 
+                        Normality of NaOH in feed tank,           N<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="na" type="number" step="0.1" name="na" min="0" value="0.1">  N          <br>
+                        Normality of Ethyl Acetate in feed tank,  N<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="nb" type="number" step="0.1" name="nb" min="0" value="0.1">  N          <br> 
+                        Temperature, T     &nbsp; <input class="input-style" id="temperature" type="range" name="temperature" min="25" max="40" value="25"> &deg;C <br> 
+                        <button id="next-btn" class="button m-1" type="button">Next</button>
+                </div>
+                <div id="menu-2" class="menu p-1 hide">
+                        <div id="cstr-config" class="border m-1 p-1">
+                                Change this to add new CSTR <br>
+                                Volume of CSTR, V  &nbsp; <input class="input-style" id="cstrVol" type="number" name="cstrVol" min="0" step="0.01" value="0.97"> L 
+                                &nbsp; &nbsp; <button id="cstr-btn" class="button default-margin" type="button" >Add CSTR</button> 
+                        </div >
+                        <div id="pfr-config" class="border m-1 p-1">
+                                Change this to add new PFR <br>
+                                Length of PFR, L   &nbsp; <input class="input-style" id="pfrLen" type="number" name="pfrLen" min="0" step="1" value="1"> m <br>
+                                Diameter of PFR, D &nbsp; <input class="input-style" id="pfrDia" type="number" name="pfrDia" min="0" step="0.01" value="3.5"> cm 
+                                &nbsp; &nbsp; <button id="pfr-btn" class="button m-1" type="button">Add PFR</button>
+                        </div>
+                       
+                        <button id="draw-btn" class="button m-1" type="button">Draw chart</button>
+                        <button id="data-btn" class="button m-1" type="button">Show data</button>
+                </div>
+
+        </div>
+       
+        <canvas id="canvas-1" class="container border" style="max-height:400px; height: auto; margin-right: auto; margin-left: auto;" id="myChart" >
+       
+        </canvas>
+</div>
+<div class="container reactor-display">
+        <!-- to remove the margins between pipe and reactors </div is left open and closed in next line -->      
 </div>
 
-<script src="/js/makeChart.js"></script>
-
+<script src="/js/reactor.js"></script>
 <%- include("partials/footer") -%>

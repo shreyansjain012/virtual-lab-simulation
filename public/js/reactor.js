@@ -115,8 +115,9 @@ function cstr (k, Ca0, Cb0, tau2, Xa1) {
 
 
 $(function(){
-    let reactorType, newStr, Xa1=0;
+    let reactorType, pipeStr, Xa1=0;
     let Fa, Fb, Na, Nb, k, temperature, Ca0, Cb0;
+    let Xa_data = [], tau_data = [];
 
     $('#next-btn').click(function (){
         Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
@@ -136,39 +137,44 @@ $(function(){
     $('#pfr-btn').click(function(){
         reactorType = 'PFR';
         let d, l, v1, tau1;
-        newStr = '<div class="pipe"></div><div class="reactor blue">'+ reactorType +'</div><div class="pipe"></div>';
+
+        pipeStr = '<div class="pipe"></div><div class="reactor blue">'+ reactorType +'</div><div class="pipe"></div>';
+        $('.reactor-display').html(pipe(pipeStr)).hide().fadeIn();
 
         d = Number(document.getElementById("pfrDia").value);
         l = Number(document.getElementById("pfrLen").value);
         v1 = pfrVol(d, l); 
-        tau1 = v1 / (Fa + Fb);
+        tau1 = v1 / (Fa + Fb);   
         Xa1 = pfr(k, Ca0, Cb0, tau1, Xa1);
-
-        console.log(d,l,v1,tau1,Xa1);
-        $('.reactor-display').html(pipe(newStr)).hide().fadeIn();
     });
     
     $('#cstr-btn').click(function(){
         reactorType = 'CSTR';
         let v2, tau2;
-        newStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>';
-        console.log(reactorType);
-        v2 = Number(document.getElementById('cstrVol').value);
-        tau2 = v2 / (Fa + Fb);
-        Xa1 = cstr (k, Ca0, Cb0, tau2, Xa1);
         
-        console.log(v2, tau2, Xa1);
-        $('.reactor-display').html(pipe(newStr)).hide().fadeIn();
+        pipeStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>'; 
+        $('.reactor-display').html(pipe(pipeStr)).hide().fadeIn();
+
+        v2 = Number(document.getElementById('cstrVol').value);
+        tau2 = v2 / (Fa + Fb);        
+        Xa1 = cstr(k, Ca0, Cb0, tau2, Xa1);
+    });
+
+    $('#draw-btn').click(function () {
+
     });
 
 });
 
+/*
+ * updates html code for pipe flow a
+ * 
+ * @param   (string)    pipeStr     new html code for pipe accoring to type of reactor
+ *    
+ * @return  (Number)    updated variable str with new string added to it
+ */
 let str = '';
-function pipe(newStr) {
-    str = str + newStr;
+function pipe(pipeStr) {
+    str = str + pipeStr;
     return str;
 }
-
-// show dataset for Xa vs tau
-// show graph of Xa vs tau for 1 temperature
-// show graph of Xa vs tau for 3 different temperatures
