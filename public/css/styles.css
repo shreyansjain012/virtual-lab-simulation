@@ -78,6 +78,7 @@ ul.responses li {
 }
 .button:hover {
     background-color:rgb(176,224,230);
+    color: blue;
     text-decoration: none;
 }
 
