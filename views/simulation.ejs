@@ -4,6 +4,7 @@
 <div id="sim-container-1" class="container">
         <div id="menu" class="menu border p-1">
                 <div id="menu-1">
+                        <h3>Reactor Design</h3>
                         Flow rate of NaOH,                        F<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="fa" type="number" step="0.1" name="fa" min="1" max="20" value="12"> LPH   <br> 
                         Flow rate of Ethyl Acetate,               F<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="fb" type="number" step="0.1" name="fb" min="1" max="20" value="12"> LPH   <br> 
                         Normality of NaOH in feed tank,           N<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="na" type="number" step="0.1" name="na" min="0" value="0.1">  N          <br>
@@ -12,28 +13,32 @@
                         <button id="next-btn" class="button m-1" type="button">Next</button>
                 </div>
                 <div id="menu-2" class="menu p-1 hide">
-                        <div id="cstr-config" class="border m-1 p-1">
-                                Change this to add new CSTR <br>
-                                Volume of CSTR, V  &nbsp; <input class="input-style" id="cstrVol" type="number" name="cstrVol" min="0" step="0.01" value="0.97"> L 
-                                &nbsp; &nbsp; <button id="cstr-btn" class="button default-margin" type="button" >Add CSTR</button> 
-                        </div >
                         <div id="pfr-config" class="border m-1 p-1">
-                                Change this to add new PFR <br>
+                                <span style="color: rgb(70,130,180);">Change here to add new PFR</span> <br>
                                 Length of PFR, L   &nbsp; <input class="input-style" id="pfrLen" type="number" name="pfrLen" min="0" step="1" value="1"> m <br>
                                 Diameter of PFR, D &nbsp; <input class="input-style" id="pfrDia" type="number" name="pfrDia" min="0" step="0.01" value="3.5"> cm 
                                 &nbsp; &nbsp; <button id="pfr-btn" class="button m-1" type="button">Add PFR</button>
                         </div>
                        
+                        <div id="cstr-config" class="border m-1 p-1">
+                                <span style="color: rgb(70,130,180);">Change here to add new CSTR</span> <br>
+                                Volume of CSTR, V  &nbsp; <input class="input-style" id="cstrVol" type="number" name="cstrVol" min="0" step="0.01" value="0.97"> L 
+                                &nbsp; &nbsp; <button id="cstr-btn" class="button default-margin" type="button" >Add CSTR</button> 
+                        </div >
                         <button id="draw-btn" class="button m-1" type="button">Draw chart</button>
                         <button id="data-btn" class="button m-1" type="button">Show data</button>
+                        <div id="res-config" class="border m-1 p-1 hide" style="background-color: greenyellow;">
+                                <math>X<sub>A</sub> = <span id="res-1" style="color: green;"></span></math> and 
+                                <math>τ = <span id="res-2" style="color: green;"></span></math>
+                        </div>
                 </div>
-
         </div>
        
-        <canvas id="canvas-1" class="container border" style="max-height:400px; height: auto; margin-right: auto; margin-left: auto;" id="myChart" >
+        <canvas id="canvas-1" class="container border" style="max-height:400px; height: auto; margin-right: auto; margin-left: auto;">
        
         </canvas>
 </div>
+
 <div class="container reactor-display">
         <!-- to remove the margins between pipe and reactors </div is left open and closed in next line -->      
 </div>

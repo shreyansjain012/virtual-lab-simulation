@@ -4,8 +4,7 @@ const Ea = 48325.2; // Activation energy (Joule/mol)
 const R = 8.314 // universal gas constant in SI units
 
 const pi = Math.PI;
-
-// let myChart = document.getElementById('myChart').getContext('2d');
+let myChart = document.getElementById('canvas-1').getContext('2d');
 
 /*
  * Uses Arrhenius equation to calculate the rate constant for a reaction 
@@ -113,11 +112,32 @@ function cstr (k, Ca0, Cb0, tau2, Xa1) {
     }
 }
 
+/*
+ * updates html code for pipe flow a
+ * 
+ * @param   (string)    pipeStr     new html code for pipe accoring to type of reactor
+ *    
+ * @return  (Number)    updated variable str with new string added to it
+ */
+let str = '';
+function pipe(pipeStr) {
+    str = str + pipeStr;
+    return str;
+}
 
 $(function(){
-    let reactorType, pipeStr, Xa1=0;
+    let reactorType, pipeStr;
     let Fa, Fb, Na, Nb, k, temperature, Ca0, Cb0;
-    let Xa_data = [], tau_data = [];
+
+    let Xa=0;
+    
+    //variables for displaying the chart
+    let tau=0, tauMin=75, tauMax=150;
+    let dataSize = tauMax - tauMin + 1;
+    let Xa_data = new Array(dataSize), tau_data = new Array(dataSize);
+   
+    Xa_data.fill(0);    
+    tau_data.fill(0);
 
     $('#next-btn').click(function (){
         Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
@@ -135,46 +155,100 @@ $(function(){
     });
 
     $('#pfr-btn').click(function(){
+        //initialize variables here
         reactorType = 'PFR';
         let d, l, v1, tau1;
 
+        //displays pipe
         pipeStr = '<div class="pipe"></div><div class="reactor blue">'+ reactorType +'</div><div class="pipe"></div>';
         $('.reactor-display').html(pipe(pipeStr)).hide().fadeIn();
 
+        //gets input from the browser
         d = Number(document.getElementById("pfrDia").value);
         l = Number(document.getElementById("pfrLen").value);
+        
         v1 = pfrVol(d, l); 
         tau1 = v1 / (Fa + Fb);   
-        Xa1 = pfr(k, Ca0, Cb0, tau1, Xa1);
+        tau += tau1;
+        Xa = pfr(k, Ca0, Cb0, tau1, Xa);
+        
+        // make chart data
+        for(let currTau=tauMin; currTau<=tauMax; currTau++){
+            let j = currTau - tauMin;
+            tau_data[j] += currTau;
+            Xa_data[j] = pfr(k, Ca0, Cb0, currTau, Xa_data[j]);
+        }
+ 
     });
     
     $('#cstr-btn').click(function(){
+        //initialize variables here
         reactorType = 'CSTR';
         let v2, tau2;
         
+        //displays pipe
         pipeStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>'; 
         $('.reactor-display').html(pipe(pipeStr)).hide().fadeIn();
 
+        //gets input from the browser
         v2 = Number(document.getElementById('cstrVol').value);
-        tau2 = v2 / (Fa + Fb);        
-        Xa1 = cstr(k, Ca0, Cb0, tau2, Xa1);
+        
+        tau2 = v2 / (Fa + Fb);    
+        tau += tau2;
+        Xa = cstr(k, Ca0, Cb0, tau2, Xa);
+        
+        // make chart data
+        for(let currTau=tauMin; currTau<=tauMax; currTau++){
+            let j = currTau - tauMin;
+            tau_data[j] += currTau;
+            Xa_data[j] = cstr(k, Ca0, Cb0, currTau, Xa_data[j]);
+        }
+
     });
 
     $('#draw-btn').click(function () {
 
+        console.log(Xa_data, tau_data);
+        console.log("tau =>" + tau);
+        console.log("Xa =>" + Xa);
+        
+        $('#res-config').show();
+        $('#res-1').html(Xa.toPrecision(6));
+        $('#res-2').html(tau.toPrecision(6));
+
+        let chart = new Chart(myChart, {
+            type: 'line',
+            data: {
+                labels: tau_data,
+                datasets: [{
+                    backgroundColor: new Array(dataSize).fill('rgb(70,130,180)'),
+                    borderColor: 'rgb(63, 182, 182)',
+                    data: Xa_data,
+                    fill: false,
+                    label: 'Xa vs. Tau',
+                    pointRadius: new Array(dataSize).fill(3)
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });    
     });
 
-});
+    // $('#data-btn').click(function(){
+    //     let win = window.open();
+    //     let txt = "<ul>"
+    //     for(let i=tauMin; i<=tauMax; i++){
+            
+    //     }
+    //     win.document.write(txt);
+    // });
 
-/*
- * updates html code for pipe flow a
- * 
- * @param   (string)    pipeStr     new html code for pipe accoring to type of reactor
- *    
- * @return  (Number)    updated variable str with new string added to it
- */
-let str = '';
-function pipe(pipeStr) {
-    str = str + pipeStr;
-    return str;
-}
+});
