@@ -127,16 +127,18 @@ function pipe(pipeStr) {
 
 $(function(){
     let reactorType, pipeStr;
-    let Fa, Fb, Na, Nb, k, temperature, Ca0, Cb0;
+    let Fa, Fb, Na, Nb, k1, k2, temp1, temp2, Ca0, Cb0;
 
     let Xa=0;
     
     //variables for displaying the chart
-    let tau=0, tauMin=75, tauMax=150;
+    let tau=0, tauMin=75, tauMax=120;
     let dataSize = tauMax - tauMin + 1;
-    let Xa_data = new Array(dataSize), tau_data = new Array(dataSize);
-   
-    Xa_data.fill(0);    
+    let Xa_data1 = new Array(dataSize), tau_data = new Array(dataSize);
+    let Xa_data2 = new Array(dataSize);
+
+    Xa_data1.fill(0);
+    Xa_data2.fill(0);        
     tau_data.fill(0);
 
     $('#next-btn').click(function (){
@@ -144,8 +146,10 @@ $(function(){
         Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
         Na = Number(document.getElementById("na").value);
         Nb = Number(document.getElementById("nb").value);
-        temperature =  Number(document.getElementById("temperature").value);
-        k = rateConstant(A, Ea, R, temperature);
+        temp1 =  Number(document.getElementById("temperature").value);
+        temp2 = temp1+10;
+        k1 = rateConstant(A, Ea, R, temp1);
+        k2 = rateConstant(A, Ea, R, temp2);
         Ca0 = getCa0(Fa, Fb, Na, Nb);
         Cb0 = getCb0(Fa, Fb, Na, Nb);
         
@@ -170,13 +174,14 @@ $(function(){
         v1 = pfrVol(d, l); 
         tau1 = v1 / (Fa + Fb);   
         tau += tau1;
-        Xa = pfr(k, Ca0, Cb0, tau1, Xa);
+        Xa = pfr(k1, Ca0, Cb0, tau1, Xa);
         
         // make chart data
         for(let currTau=tauMin; currTau<=tauMax; currTau++){
             let j = currTau - tauMin;
             tau_data[j] += currTau;
-            Xa_data[j] = pfr(k, Ca0, Cb0, currTau, Xa_data[j]);
+            Xa_data1[j] = pfr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
+            Xa_data2[j] = pfr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
         }
  
     });
@@ -195,22 +200,19 @@ $(function(){
         
         tau2 = v2 / (Fa + Fb);    
         tau += tau2;
-        Xa = cstr(k, Ca0, Cb0, tau2, Xa);
+        Xa = cstr(k1, Ca0, Cb0, tau2, Xa);
         
         // make chart data
         for(let currTau=tauMin; currTau<=tauMax; currTau++){
             let j = currTau - tauMin;
             tau_data[j] += currTau;
-            Xa_data[j] = cstr(k, Ca0, Cb0, currTau, Xa_data[j]);
+            Xa_data1[j] = cstr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
+            Xa_data2[j] = cstr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
         }
 
     });
 
     $('#draw-btn').click(function () {
-
-        console.log(Xa_data, tau_data);
-        console.log("tau =>" + tau);
-        console.log("Xa =>" + Xa);
         
         $('#res-config').show();
         $('#res-1').html(Xa.toPrecision(6));
@@ -221,20 +223,36 @@ $(function(){
             data: {
                 labels: tau_data,
                 datasets: [{
-                    backgroundColor: new Array(dataSize).fill('rgb(70,130,180)'),
-                    borderColor: 'rgb(63, 182, 182)',
-                    data: Xa_data,
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: Xa_data1,
                     fill: false,
-                    label: 'Xa vs. Tau',
-                    pointRadius: new Array(dataSize).fill(3)
+                    label: 'T = '+ temp1 + '°C' ,
+                }, {
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    data: Xa_data2,
+                    fill: false,
+                    label: 'T = '+ temp2 + '°C',
                 }]
             },
             options: {
                 responsive: false,
                 scales: {
                     yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Conversion, Xa"
+                        },
                         ticks: {
                             beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Overall residence time, 𝜏"
                         }
                     }]
                 }
@@ -242,13 +260,18 @@ $(function(){
         });    
     });
 
-    // $('#data-btn').click(function(){
-    //     let win = window.open();
-    //     let txt = "<ul>"
-    //     for(let i=tauMin; i<=tauMax; i++){
-            
-    //     }
-    //     win.document.write(txt);
-    // });
+    $('#data-btn').click(function(){
+        let win = window.open();
+        let htmlText = '<table  style="border: 1px solid black;">';
+        htmlText += '<tr><th>Xa</th><th>Tau</th></tr>';
+        for(let i=0; i<tau_data.length; i++){
+            htmlText += '<tr>';
+            htmlText += '<td>' + Xa_data[i] + '</td>';
+            htmlText += '<td>' + tau_data[i] + '</td>';
+            htmlText += '</tr>';
+        }
+        htmlText += '</table>';
+        win.document.write(htmlText);
+    });
 
 });
