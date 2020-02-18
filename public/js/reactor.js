@@ -132,7 +132,7 @@ $(function(){
     let Xa=0;
     
     //variables for displaying the chart
-    let tau=0, tauMin=75, tauMax=120;
+    let tau=0, tauMin=100, tauMax=150;
     let dataSize = tauMax - tauMin + 1;
     let Xa_data1 = new Array(dataSize), tau_data = new Array(dataSize);
     let Xa_data2 = new Array(dataSize);
