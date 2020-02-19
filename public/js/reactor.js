@@ -127,7 +127,7 @@ function pipe(pipeStr) {
 
 $(function(){
     let reactorType, pipeStr;
-    let Fa, Fb, Na, Nb, k1, k2, temp1, temp2, Ca0, Cb0;
+    let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0;
 
     let Xa=0;
     
@@ -136,9 +136,10 @@ $(function(){
     let dataSize = tauMax - tauMin + 1;
     let Xa_data1 = new Array(dataSize), tau_data = new Array(dataSize);
     let Xa_data2 = new Array(dataSize);
-
+    let Xa_data3 = new Array(dataSize);
     Xa_data1.fill(0);
-    Xa_data2.fill(0);        
+    Xa_data2.fill(0);
+    Xa_data3.fill(0);        
     tau_data.fill(0);
 
     $('#next-btn').click(function (){
@@ -147,9 +148,11 @@ $(function(){
         Na = Number(document.getElementById("na").value);
         Nb = Number(document.getElementById("nb").value);
         temp1 =  Number(document.getElementById("temperature").value);
-        temp2 = temp1+10;
+        temp2 = temp1+5;
+        temp3 = temp1-5;
         k1 = rateConstant(A, Ea, R, temp1);
         k2 = rateConstant(A, Ea, R, temp2);
+        k3 = rateConstant(A, Ea, R, temp3);
         Ca0 = getCa0(Fa, Fb, Na, Nb);
         Cb0 = getCb0(Fa, Fb, Na, Nb);
         
@@ -182,6 +185,7 @@ $(function(){
             tau_data[j] += currTau;
             Xa_data1[j] = pfr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
             Xa_data2[j] = pfr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
+            Xa_data3[j] = pfr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
         }
  
     });
@@ -208,6 +212,7 @@ $(function(){
             tau_data[j] += currTau;
             Xa_data1[j] = cstr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
             Xa_data2[j] = cstr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
+            Xa_data3[j] = cstr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
         }
 
     });
@@ -234,6 +239,12 @@ $(function(){
                     data: Xa_data2,
                     fill: false,
                     label: 'T = '+ temp2 + '°C',
+                }, {
+                    backgroundColor: 'rgb(153, 102, 255)',
+                    borderColor: 'rgb(153, 102, 255)',
+                    data: Xa_data3,
+                    fill: false,
+                    label: 'T = '+ temp3 + '°C',
                 }]
             },
             options: {
@@ -266,7 +277,7 @@ $(function(){
         htmlText += '<tr><th>Xa</th><th>Tau</th></tr>';
         for(let i=0; i<tau_data.length; i++){
             htmlText += '<tr>';
-            htmlText += '<td>' + Xa_data[i] + '</td>';
+            htmlText += '<td>' + Xa_data1[i] + '</td>';
             htmlText += '<td>' + tau_data[i] + '</td>';
             htmlText += '</tr>';
         }

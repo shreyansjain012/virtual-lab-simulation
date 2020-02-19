@@ -44,11 +44,9 @@ app.get('/video', function(req, res) {
   res.render('video');
 });
 
-
 app.get('/calculation', function(req, res){
   res.render('calculation');
 });
-
 
 app.listen(3000, function() {
   console.log('Server started on port 3000');
