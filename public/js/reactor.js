@@ -228,7 +228,6 @@ $(function(){
                 j++;
             }
         }
-        console.log(Xa_data1, tau_data);
         
 
         $('#res-config').show();
@@ -287,9 +286,9 @@ $(function(){
     });
 
     $('#data-btn').click(function(){
-        localStorage.setItem('Xa_data', Xa_data1);
-        localStorage.setItem('tau_data', tau_data);
-        location.href = "datasheet";
+        let chartdata = [Xa_data1, tau_data];
+        localStorage.setItem('chartdata', JSON.stringify(chartdata));
+        window.open('datasheet');
         return false;
     });
 

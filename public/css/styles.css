@@ -268,3 +268,17 @@ ul.responses li.incorrect p span {
 }
 
 /* New simulation css ends */
+
+/* datasheet css starts */
+#table-1 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+/* #table-1 tr td {
+    padding: 20px;
+}
+#table-1 tr th {
+    padding: 20px;
+} */
+/* datasheet css ends */
