@@ -3,7 +3,12 @@ const A = 3.23 * Math.pow(10,7); // Frequency factor (L/mol.s)
 const Ea = 48325.2; // Activation energy (Joule/mol)
 const R = 8.314 // universal gas constant in SI units
 
+// Variables which are used throughout the code
+const color1 = 'rgb(54, 162, 235)'; // blue
+const color2 = 'rgb(75, 192, 10)';  // green
+const color3 = 'rgb(255, 99, 132)'; // red
 const pi = Math.PI;
+
 let myChart = document.getElementById('canvas-1').getContext('2d');
 
 /*
@@ -221,27 +226,27 @@ $(function(){
         
         $('#res-config').show();
         $('#res-1').html(Xa.toPrecision(6));
-        $('#res-2').html(tau.toPrecision(6));
+        $('#res-2').html(tau.toPrecision(6) + ' s');
 
         let chart = new Chart(myChart, {
             type: 'line',
             data: {
                 labels: tau_data,
                 datasets: [{
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    data: Xa_data1,
-                    fill: false,
-                    label: 'T = '+ temp1 + '°C' ,
-                }, {
-                    backgroundColor: 'rgb(54, 162, 235)',
-                    borderColor: 'rgb(54, 162, 235)',
+                    backgroundColor: color2,
+                    borderColor: color2,
                     data: Xa_data2,
                     fill: false,
-                    label: 'T = '+ temp2 + '°C',
+                    label: 'T = '+ temp2 + '°C' ,
                 }, {
-                    backgroundColor: 'rgb(153, 102, 255)',
-                    borderColor: 'rgb(153, 102, 255)',
+                    backgroundColor: color1,
+                    borderColor: color1,
+                    data: Xa_data1,
+                    fill: false,
+                    label: 'T = '+ temp1 + '°C',
+                }, {
+                    backgroundColor: color3,
+                    borderColor: color3,
                     data: Xa_data3,
                     fill: false,
                     label: 'T = '+ temp3 + '°C',
@@ -263,7 +268,7 @@ $(function(){
                     xAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: "Overall residence time, 𝜏"
+                            labelString: "Overall residence time, 𝜏 (s)"
                         }
                     }]
                 }
