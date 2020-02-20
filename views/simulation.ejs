@@ -1,6 +1,5 @@
 <%- include("partials/header") -%>
 <%- include("partials/navbar") -%>
-
 <div id="sim-container-1" class="container">
         <div id="menu" class="menu border p-1">
                 <div id="menu-1">
@@ -9,7 +8,7 @@
                         Flow rate of Ethyl Acetate,               F<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="fb" type="number" step="0.1" name="fb" min="1" max="20" value="12"> LPH   <br> 
                         Normality of NaOH in feed tank,           N<math><sub>A</sub></math> &nbsp;        <input class="input-style" id="na" type="number" step="0.1" name="na" min="0" value="0.1">  N          <br>
                         Normality of Ethyl Acetate in feed tank,  N<math><sub>B</sub></math> &nbsp;        <input class="input-style" id="nb" type="number" step="0.1" name="nb" min="0" value="0.1">  N          <br> 
-                        Temperature, T     &nbsp; <input class="input-style" id="temperature" type="range" name="temperature" min="25" max="40" value="25"> &deg;C <br> 
+                        Temperature, T     &nbsp; <input class="input-range" id="temp-range" type="range" name="temperature" min="25" max="40" value="25" onmousemove="rangeSlider(this.value)" onchange="rangeSlider(this.value)"> <span id="rangeValue">25</span>&deg;C <br> 
                         <button id="next-btn" class="button m-1" type="button">Next</button>
                 </div>
                 <div id="menu-2" class="menu p-1 hide">
@@ -27,7 +26,7 @@
                         </div >
                         <button id="draw-btn" class="button m-1" type="button">Submit</button>
                         <button id="data-btn" class="button m-1" type="button">Show data</button>
-                        <div style="background-color: greenyellow;" id="res-config" class="border m-1 p-1 hide"> <!--style="background-color: greenyellow;" -->
+                        <div style="background-color: rgb(192, 248, 161);" id="res-config" class="border m-1 p-1 hide"> <!--style="background-color: greenyellow;" -->
                                 <math>X<sub>A</sub> = <span id="res-1" style="color: green;"></span></math> and 
                                 <math>τ = <span id="res-2" style="color: green;"></span></math>
                         </div>
@@ -44,4 +43,9 @@
 </div>
 
 <script src="/js/reactor.js"></script>
+<script type="text/javascript">
+        function rangeSlider(value){
+                document.getElementById('rangeValue').innerHTML=value;
+        }
+</script>
 <%- include("partials/footer") -%>

@@ -169,13 +169,45 @@ ul.responses li.incorrect p span {
     padding: 5px;
 }
 
-.input-style {
+.input-style { 
     margin: 6px;
     width: 70px;
 }
 
 .input-radio {
     margin: 7px;
+}
+
+#rangeValue {
+    padding: 2px;
+    width: 50px;
+    border-radius: 2px;
+}
+.input-range {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    margin: 5px;
+    width: 80px;
+    height: 2px;
+    background: #111;
+    outline: none;
+    border-radius: 2px;
+}
+.input-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00bcd4;
+}
+.input-range::-moz-range-thumb {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #00bcd4;
 }
 
 @media only screen and (min-width: 600px) {

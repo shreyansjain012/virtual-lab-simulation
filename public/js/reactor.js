@@ -152,7 +152,7 @@ $(function(){
         Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
         Na = Number(document.getElementById("na").value);
         Nb = Number(document.getElementById("nb").value);
-        temp1 =  Number(document.getElementById("temperature").value);
+        temp1 =  Number(document.getElementById("temp-range").value);
         temp2 = temp1+5;
         temp3 = temp1-5;
         k1 = rateConstant(A, Ea, R, temp1);
