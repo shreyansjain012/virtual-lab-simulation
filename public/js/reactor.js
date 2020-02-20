@@ -277,17 +277,24 @@ $(function(){
     });
 
     $('#data-btn').click(function(){
-        let win = window.open();
-        let htmlText = '<table  style="border: 1px solid black;">';
-        htmlText += '<tr><th>Xa</th><th>Tau</th></tr>';
-        for(let i=0; i<tau_data.length; i++){
-            htmlText += '<tr>';
-            htmlText += '<td>' + Xa_data1[i] + '</td>';
-            htmlText += '<td>' + tau_data[i] + '</td>';
-            htmlText += '</tr>';
-        }
-        htmlText += '</table>';
-        win.document.write(htmlText);
+        localStorage.setItem('Xa_data', Xa_data1);
+        localStorage.setItem('tau_data', tau_data);
+        location.href = "datasheet";
+        return false;
     });
+
+    // $('#data-btn').click(function(){
+    //     let win = window.open();
+    //     let htmlText = '<table  style="border: 1px solid black;">';
+    //     htmlText += '<tr><th>Xa</th><th>Tau</th></tr>';
+    //     for(let i=0; i<tau_data.length; i++){
+    //         htmlText += '<tr>';
+    //         htmlText += '<td>' + Xa_data1[i] + '</td>';
+    //         htmlText += '<td>' + tau_data[i] + '</td>';
+    //         htmlText += '</tr>';
+    //     }
+    //     htmlText += '</table>';
+    //     win.document.write(htmlText);
+    // });
 
 });

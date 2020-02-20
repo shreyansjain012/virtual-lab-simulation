@@ -1,0 +1,27 @@
+<%- include("partials/header") -%>
+<%- include("partials/navbar") -%>
+
+<div class="container">
+    <table>
+        <tr>
+            <th class="border">Xa</th>
+            <th class="border">Tau</th>            
+        </tr>
+        <div id="data-1">
+
+        </div>
+    </table>
+</div>
+<script type="text/javascript">
+    let Xa_data = localStorage.getItem('Xa_data');
+    let tau_data = localStorage.getItem('tau_data');
+    let htmlText = '';
+    for(let i=0; i<tau_data.length; i++){
+        htmlText += '<tr>';
+        htmlText += '<td class="border">' + Xa_data[i] + '</td>';
+        htmlText += '<td class="border">' + tau_data[i] + '</td>';
+        htmlText += '</tr>';
+    }
+    document.getElementById('data-1').innerHTML = htmlText;
+</script>
+<%- include("partials/footer") -%>

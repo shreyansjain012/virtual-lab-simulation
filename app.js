@@ -44,6 +44,10 @@ app.get('/video', function(req, res) {
   res.render('video');
 });
 
+app.get('/datasheet', function(req, res) {
+  res.render('datasheet');
+});
+
 app.get('/calculation', function(req, res){
   res.render('calculation');
 });
