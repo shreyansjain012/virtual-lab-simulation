@@ -10,7 +10,7 @@ const color3 = 'rgb(255, 99, 132)'; // red
 const pi = Math.PI;
 
 let myChart = document.getElementById('canvas-1').getContext('2d');
-
+let chart;
 /*
  * Uses Arrhenius equation to calculate the rate constant for a reaction 
  *
@@ -118,34 +118,36 @@ function cstr (k, Ca0, Cb0, tau2, Xa1) {
 }
 
 /*
- * updates html code for pipe flow a
+ * updates html code for pipe flow 
  * 
- * @param   (string)    pipeStr     new html code for pipe accoring to type of reactor
+ * @param   (string)    reactorType     type of reactor ie. CSTR or PFR
  *    
- * @return  (Number)    updated variable str with new string added to it
+ * @return  (string)    updated string str
  */
 let str = '';
-function pipe(pipeStr) {
-    str = str + pipeStr;
-    return str;
+function displayPipe(reactorType){
+    let pipeStr;
+    if(reactorType === 'PFR'){
+        pipeStr = '<div class="pipe"></div><div class="reactor blue">'+ reactorType +'</div><div class="pipe"></div>';
+    }else {
+        pipeStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>'; 
+    }
+    str += pipeStr
+    $('.reactor-display').html(str).hide().fadeIn();
 }
 
-$(function(){
-    let reactorType, pipeStr;
-    let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0;
 
+
+$(function(){
+    let reactorType;
+    let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0;
+    let reactors = [];
     let Xa=0;
     
     //variables for displaying the chart
-    let tau=0, tauMin=100, tauMax=150;
-    let dataSize = tauMax - tauMin + 1;
-    let Xa_data1 = new Array(dataSize), tau_data = new Array(dataSize);
-    let Xa_data2 = new Array(dataSize);
-    let Xa_data3 = new Array(dataSize);
-    Xa_data1.fill(0);
-    Xa_data2.fill(0);
-    Xa_data3.fill(0);        
-    tau_data.fill(0);
+    let tau=0, dataSize = 25;
+    let tau_data = new Array(dataSize), Xa_data1 = new Array(dataSize), Xa_data2 = new Array(dataSize), Xa_data3 = new Array(dataSize);
+    tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
 
     $('#next-btn').click(function (){
         Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
@@ -169,11 +171,11 @@ $(function(){
     $('#pfr-btn').click(function(){
         //initialize variables here
         reactorType = 'PFR';
+        reactors.push(reactorType);
         let d, l, v1, tau1;
 
         //displays pipe
-        pipeStr = '<div class="pipe"></div><div class="reactor blue">'+ reactorType +'</div><div class="pipe"></div>';
-        $('.reactor-display').html(pipe(pipeStr)).hide().fadeIn();
+        displayPipe(reactorType);
 
         //gets input from the browser
         d = Number(document.getElementById("pfrDia").value);
@@ -184,51 +186,56 @@ $(function(){
         tau += tau1;
         Xa = pfr(k1, Ca0, Cb0, tau1, Xa);
         
-        // make chart data
-        for(let currTau=tauMin; currTau<=tauMax; currTau++){
-            let j = currTau - tauMin;
-            tau_data[j] += currTau;
-            Xa_data1[j] = pfr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
-            Xa_data2[j] = pfr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
-            Xa_data3[j] = pfr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
-        }
- 
     });
     
     $('#cstr-btn').click(function(){
         //initialize variables here
         reactorType = 'CSTR';
+        reactors.push(reactorType);
         let v2, tau2;
         
         //displays pipe
-        pipeStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>'; 
-        $('.reactor-display').html(pipe(pipeStr)).hide().fadeIn();
-
+        displayPipe(reactorType);
+        
         //gets input from the browser
         v2 = Number(document.getElementById('cstrVol').value);
         
         tau2 = v2 / (Fa + Fb);    
         tau += tau2;
         Xa = cstr(k1, Ca0, Cb0, tau2, Xa);
-        
-        // make chart data
-        for(let currTau=tauMin; currTau<=tauMax; currTau++){
-            let j = currTau - tauMin;
-            tau_data[j] += currTau;
-            Xa_data1[j] = cstr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
-            Xa_data2[j] = cstr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
-            Xa_data3[j] = cstr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
-        }
-
     });
 
     $('#draw-btn').click(function () {
         
+        let tauMin = Math.floor(tau*0.1/reactors.length);
+        let tauMax = Math.floor(tau*10/reactors.length);
+        let increment = Math.ceil((tauMax - tauMin)/dataSize);
+        
+        for(let i=0; i<reactors.length; i++){
+            let j=0;
+            for(let currTau=tauMin; currTau<=tauMax; currTau+=increment){
+                tau_data[j] += currTau;
+                if(reactors[i] === 'CSTR') {
+                    Xa_data1[j] = cstr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
+                    Xa_data2[j] = cstr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
+                    Xa_data3[j] = cstr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
+                }
+                else {
+                    Xa_data1[j] = pfr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
+                    Xa_data2[j] = pfr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
+                    Xa_data3[j] = pfr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
+                }
+                j++;
+            }
+        }
+        console.log(Xa_data1, tau_data);
+        
+
         $('#res-config').show();
         $('#res-1').html(Xa.toPrecision(6));
         $('#res-2').html(tau.toPrecision(6) + ' s');
 
-        let chart = new Chart(myChart, {
+        chart = new Chart(myChart, {
             type: 'line',
             data: {
                 labels: tau_data,
@@ -255,6 +262,9 @@ $(function(){
             options: {
                 responsive: false,
                 scales: {
+                    ticks: {    
+                        stepSize: 15
+                    },
                     yAxes: [{
                         display: true,
                         scaleLabel: {
@@ -283,18 +293,19 @@ $(function(){
         return false;
     });
 
-    // $('#data-btn').click(function(){
-    //     let win = window.open();
-    //     let htmlText = '<table  style="border: 1px solid black;">';
-    //     htmlText += '<tr><th>Xa</th><th>Tau</th></tr>';
-    //     for(let i=0; i<tau_data.length; i++){
-    //         htmlText += '<tr>';
-    //         htmlText += '<td>' + Xa_data1[i] + '</td>';
-    //         htmlText += '<td>' + tau_data[i] + '</td>';
-    //         htmlText += '</tr>';
+    // $('#reset-btn').click(function(){
+    //     if(confirm('Are you sure?')){
+    //         str = '';
+    //         $('.reactor-display').html(str);
+    //         tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
+    //         Xa = 0, tau = 0;
+    //         $('#res-config').hide();
+    //         chart.update();
     //     }
-    //     htmlText += '</table>';
-    //     win.document.write(htmlText);
-    // });
+    //     else {
+    //         console.log('reset denied');
+    //     }
 
+    // });
 });
+
