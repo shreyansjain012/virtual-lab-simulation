@@ -21,7 +21,7 @@
                         <label>Temperature, T &nbsp;</label>
                         <input class="input-range" id="temp-range" type="range" name="temp1" min="25" max="40" value="25" onmousemove="rangeSlider(this.value)" onchange="rangeSlider(this.value)"> <span id="rangeValue">25</span>&deg;C <br> 
                         
-                        <button id="next-btn" class="button m-1" type="submit">Next</button>
+                        <button id="next-btn" class="button m-1" type="button">Next</button>
                 </form>
 
                 <div id="menu-2" class="menu p-1 hide">
@@ -36,7 +36,7 @@
                                 <input class="input-style" id="pfrDia" type="number" name="pfrDia" min="0" step="0.01" value="3.5"> cm 
                                 
                                 &nbsp; &nbsp; 
-                                <button id="pfr-btn" class="button m-1" type="submit">Add PFR</button>
+                                <button id="pfr-btn" class="button m-1" type="button">Add PFR</button>
                         
                         </form>
                        
@@ -47,13 +47,12 @@
                                 <input class="input-style" id="cstrVol" type="number" name="cstrVol" min="0" step="0.01" value="0.97"> L 
                                 
                                 &nbsp; &nbsp;
-                                <button id="cstr-btn" class="button default-margin" type="submit" >Add CSTR</button> 
+                                <button id="cstr-btn" class="button default-margin" type="button" >Add CSTR</button> 
                         </form >
                        
                         <button id="draw-btn" class="button m-1" type="button">Submit</button>
                         
                         <button id="data-btn" class="button m-1" type="button">Show data</button>
-                        <!-- <button style="background: red;"id="reset-btn" class="button m-1" type="button">Reset</button> -->
 
                         <!-- result of conversion -->
                         <div style="background-color: rgb(192, 248, 161);" id="res-config" class="border m-1 p-1 hide"> <!--style="background-color: greenyellow;" -->
