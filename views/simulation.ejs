@@ -3,38 +3,52 @@
 <div id="sim-container-1" class="container">
         <div id="menu" class="menu border p-1">
                 
-                <div id="menu-1">
-                        
+                <form id="menu-1">                        
                         <h3>Reactor Design</h3>
+
+                        <label>Flow rate of NaOH, F<math><sub>A</sub></math> &nbsp;</label>
+                        <input class="input-style" id="fa" type="number" step="0.1" name="fa" min="1" value="12"> LPH <br>
                         
-                        Flow rate of NaOH, F<math><sub>A</sub></math> &nbsp; <input class="input-style" id="fa" type="number" step="0.1" name="fa" min="1" max="20" value="12"> LPH <br> 
-                        Flow rate of Ethyl Acetate, F<math><sub>B</sub></math> &nbsp; <input class="input-style" id="fb" type="number" step="0.1" name="fb" min="1" max="20" value="12"> LPH   <br> 
-                        Normality of NaOH in feed tank, N<math><sub>A</sub></math> &nbsp; <input class="input-style" id="na" type="number" step="0.1" name="na" min="0" value="0.1">  N          <br>
-                        Normality of Ethyl Acetate in feed tank, N<math><sub>B</sub></math> &nbsp; <input class="input-style" id="nb" type="number" step="0.1" name="nb" min="0" value="0.1">  N          <br> 
-                        Temperature, T &nbsp; <input class="input-range" id="temp-range" type="range" name="temperature" min="25" max="40" value="25" onmousemove="rangeSlider(this.value)" onchange="rangeSlider(this.value)"> <span id="rangeValue">25</span>&deg;C <br> 
+                        <label>Flow rate of Ethyl Acetate, F<math><sub>B</sub></math> &nbsp;</label>
+                        <input class="input-style" id="fb" type="number" step="0.1" name="fb" min="1" value="12"> LPH <br>
+
+                        <label>Normality of NaOH in feed tank, N<math><sub>A</sub></math> &nbsp;</label>
+                        <input class="input-style" id="na" type="number" step="0.1" name="na" min="0" value="0.1">  N          <br>
                         
-                        <button id="next-btn" class="button m-1" type="button">Next</button>
-                </div>
+                        <label>Normality of Ethyl Acetate in feed tank, N<math><sub>B</sub></math> &nbsp;</label>
+                        <input class="input-style" id="nb" type="number" step="0.1" name="nb" min="0" value="0.1">  N          <br> 
+                        
+                        <label>Temperature, T &nbsp;</label>
+                        <input class="input-range" id="temp-range" type="range" name="temp1" min="25" max="40" value="25" onmousemove="rangeSlider(this.value)" onchange="rangeSlider(this.value)"> <span id="rangeValue">25</span>&deg;C <br> 
+                        
+                        <button id="next-btn" class="button m-1" type="submit">Next</button>
+                </form>
 
                 <div id="menu-2" class="menu p-1 hide">
                         
-                        <div id="pfr-config" class="border m-1 p-1">
+                        <form id="pfr-config" class="border m-1 p-1">
                                 <b>Change here to add new PFR:</b> <br>
+                                
+                                <label>Length of PFR, L &nbsp;</label>
+                                <input class="input-style" id="pfrLen" type="number" name="pfrLen" min="0" step="1" value="1"> m <br>
+                                
+                                <label>Diameter of PFR, D &nbsp;</label>
+                                <input class="input-style" id="pfrDia" type="number" name="pfrDia" min="0" step="0.01" value="3.5"> cm 
+                                
+                                &nbsp; &nbsp; 
+                                <button id="pfr-btn" class="button m-1" type="submit">Add PFR</button>
                         
-                                Length of PFR, L &nbsp; <input class="input-style" id="pfrLen" type="number" name="pfrLen" min="0" step="1" value="1"> m <br>
-                                Diameter of PFR, D &nbsp; <input class="input-style" id="pfrDia" type="number" name="pfrDia" min="0" step="0.01" value="3.5"> cm 
-                        
-                                &nbsp; &nbsp; <button id="pfr-btn" class="button m-1" type="button">Add PFR</button>
-                        
-                        </div>
+                        </form>
                        
-                        <div id="cstr-config" class="border m-1 p-1">
+                        <form id="cstr-config" class="border m-1 p-1">
                                 <b>Change here to add new CSTR:</b> <br>
                                 
-                                Volume of CSTR, V  &nbsp; <input class="input-style" id="cstrVol" type="number" name="cstrVol" min="0" step="0.01" value="0.97"> L 
+                                <label>Volume of CSTR, V  &nbsp;</label>
+                                <input class="input-style" id="cstrVol" type="number" name="cstrVol" min="0" step="0.01" value="0.97"> L 
                                 
-                                &nbsp; &nbsp; <button id="cstr-btn" class="button default-margin" type="button" >Add CSTR</button> 
-                        </div >
+                                &nbsp; &nbsp;
+                                <button id="cstr-btn" class="button default-margin" type="submit" >Add CSTR</button> 
+                        </form >
                        
                         <button id="draw-btn" class="button m-1" type="button">Submit</button>
                         

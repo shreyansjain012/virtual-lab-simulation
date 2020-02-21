@@ -1,21 +1,20 @@
-//dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
-
-// const chart = require(__dirname + "/public/js/conversionChart.js"); 
-
+const ejs = require('ejs');
 const app = express();
 
 app.set('view engine', 'ejs');
 
+app.use(express.static('public')); //tell express to serve up this public folder as a static resource.
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-//tell express to serve up this public folder as a static resource.
-app.use(express.static('public'));
 
-//listens to all GET requests
+// import local js files here
+// const combinedReactor = require(__dirname + "/combinedReactors.js");
+
+// handle get requests here
 app.get('/', function(req, res) {
   res.render('index');
 });
@@ -52,6 +51,9 @@ app.get('/calculation', function(req, res){
   res.render('calculation');
 });
 
+// handle post requests here
+
+// Does not require changes
 app.listen(3000, function() {
   console.log('Server started on port 3000');
 });
