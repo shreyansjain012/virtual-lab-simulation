@@ -8,9 +8,208 @@ const color1 = 'rgb(54, 162, 235)'; // blue
 const color2 = 'rgb(75, 192, 10)';  // green
 const color3 = 'rgb(255, 99, 132)'; // red
 const pi = Math.PI;
+const myChart = document.getElementById('canvas-1').getContext('2d');
 
-let myChart = document.getElementById('canvas-1').getContext('2d');
 let chart;
+
+$(function(){
+    let flag = false, reactorType, reactors = [];
+    let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0, Xa=0;
+
+    function setparmeters(){
+        Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
+        Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
+        Na = Number(document.getElementById("na").value);
+        Nb = Number(document.getElementById("nb").value);
+        temp1 =  Number(document.getElementById("temp-range").value);
+        temp2 = temp1+5;
+        temp3 = temp1-5;
+        k1 = rateConstant(A, Ea, R, temp1);
+        k2 = rateConstant(A, Ea, R, temp2);
+        k3 = rateConstant(A, Ea, R, temp3);
+        Ca0 = getCa0(Fa, Fb, Na, Nb);
+        Cb0 = getCb0(Fa, Fb, Na, Nb);
+    }
+
+    function setpfr(){
+        let d, l, v1, tau1;
+        d = Number(document.getElementById("pfrDia").value);
+        l = Number(document.getElementById("pfrLen").value);
+        v1 = pfrVol(d, l); 
+        tau1 = v1 / (Fa + Fb);   
+        tau += tau1;
+        Xa = pfr(k1, Ca0, Cb0, tau1, Xa);
+    }
+    
+    function setcstr(){
+        let v2, tau2;
+        v2 = Number(document.getElementById('cstrVol').value);
+        tau2 = v2 / (Fa + Fb);    
+        tau += tau2;
+        Xa = cstr(k1, Ca0, Cb0, tau2, Xa);
+    }
+
+    function displayResult(){
+        
+        $('#res-config').show();
+        $('#res-1').html(Xa.toPrecision(6));
+        $('#res-2').html(tau.toPrecision(6) + ' s');
+        
+    }
+
+    //variables for creating the chart data
+    let tau=0, dataSize = 25;
+    let tau_data = new Array(dataSize); 
+    let Xa_data1 = new Array(dataSize);
+    let Xa_data2 = new Array(dataSize);
+    let Xa_data3 = new Array(dataSize);
+    tau_data.fill(0);
+    Xa_data1.fill(0);
+    Xa_data2.fill(0); 
+    Xa_data3.fill(0);
+    
+    function createData(){
+        let tauMin = Math.floor(tau*0.1/reactors.length);
+        let tauMax = Math.floor(tau*10/reactors.length);
+        let increment = Math.ceil((tauMax - tauMin)/dataSize);
+        
+        for(let i=0; i<reactors.length; i++){
+            let j=0;
+            for(let currTau=tauMin; currTau<=tauMax; currTau+=increment){
+                tau_data[j] += currTau;
+                if(reactors[i] === 'CSTR') {
+                    Xa_data1[j] = cstr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
+                    Xa_data2[j] = cstr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
+                    Xa_data3[j] = cstr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
+                }
+                else {
+                    Xa_data1[j] = pfr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
+                    Xa_data2[j] = pfr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
+                    Xa_data3[j] = pfr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
+                }
+                j++;
+            }
+        }
+    }
+
+    $('#next-btn').click(function (){
+        
+        setparmeters();
+        $('#menu-1').hide();
+        $('#menu-2').fadeIn();
+
+    });
+
+    $('#pfr-btn').click(function(){
+        
+        reactorType = 'PFR';
+        reactors.push(reactorType);
+        
+        displayPipe(reactorType);
+        setpfr();
+
+    });
+    
+    $('#cstr-btn').click(function(){
+        
+        reactorType = 'CSTR';
+        reactors.push(reactorType);
+        
+        displayPipe(reactorType);
+        setcstr();       
+
+    });
+
+    $('#draw-btn').click(function () {
+        flag = true; // for preventing directly going to datasheet
+
+        displayResult();
+        createData();
+        
+        // code to display chart
+        chart = new Chart(myChart, {
+            type: 'line',
+            data: {
+                labels: tau_data,
+                datasets: [{
+                    backgroundColor: color2,
+                    borderColor: color2,
+                    data: Xa_data2,
+                    fill: false,
+                    label: 'T = '+ temp2 + '°C' ,
+                }, {
+                    backgroundColor: color1,
+                    borderColor: color1,
+                    data: Xa_data1,
+                    fill: false,
+                    label: 'T = '+ temp1 + '°C',
+                }, {
+                    backgroundColor: color3,
+                    borderColor: color3,
+                    data: Xa_data3,
+                    fill: false,
+                    label: 'T = '+ temp3 + '°C',
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    ticks: {    
+                        stepSize: 15
+                    },
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Conversion, Xa"
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Overall residence time, 𝜏 (s)"
+                        }
+                    }]
+                }
+            }
+        });    
+    });
+
+    $('#data-btn').click(function(){
+        
+        if(flag === false){
+            if(confirm('Are you sure?')){
+                $('#draw-btn').click();
+                flag = true;
+            }
+            else {
+                flag = false;
+            }
+        }
+        if(flag === true){
+            let chartdata = [Xa_data1, tau_data];
+            localStorage.setItem('chartdata', JSON.stringify(chartdata));
+            window.open('datasheet');
+            return false;
+        }
+        
+    });
+
+    // $('#reset-btn').click(function(){
+    //     if(confirm('Are you sure?')){
+    //         str = '';
+    //         $('.reactor-display').html(str);
+    //         tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
+    //         Xa = 0, tau = 0;
+    //         $('#res-config').hide();
+    //         chart.update();
+    //     }
+    // });
+});
+
 /*
  * Uses Arrhenius equation to calculate the rate constant for a reaction 
  *
@@ -124,7 +323,7 @@ function cstr (k, Ca0, Cb0, tau2, Xa1) {
  *    
  * @return  (string)    updated string str
  */
-let str = '';
+let pipehtml = '';
 function displayPipe(reactorType){
     let pipeStr;
     if(reactorType === 'PFR'){
@@ -132,192 +331,6 @@ function displayPipe(reactorType){
     }else {
         pipeStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>'; 
     }
-    str += pipeStr
-    $('.reactor-display').html(str).hide().fadeIn();
+    pipehtml += pipeStr
+    $('.reactor-display').html(pipehtml).hide().fadeIn();
 }
-
-
-
-$(function(){
-    let flag = false, reactorType;
-    let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0, Xa=0;
-    let reactors = [];
-    
-    //variables for displaying the chart
-    let tau=0, dataSize = 25;
-    let tau_data = new Array(dataSize), Xa_data1 = new Array(dataSize), Xa_data2 = new Array(dataSize), Xa_data3 = new Array(dataSize);
-    tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
-
-    /*
-    *  
-    *
-    */
-    $('#next-btn').click(function (){
-        Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
-        Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
-        Na = Number(document.getElementById("na").value);
-        Nb = Number(document.getElementById("nb").value);
-        temp1 =  Number(document.getElementById("temp-range").value);
-        temp2 = temp1+5;
-        temp3 = temp1-5;
-        k1 = rateConstant(A, Ea, R, temp1);
-        k2 = rateConstant(A, Ea, R, temp2);
-        k3 = rateConstant(A, Ea, R, temp3);
-        Ca0 = getCa0(Fa, Fb, Na, Nb);
-        Cb0 = getCb0(Fa, Fb, Na, Nb);
-        
-        $('#menu-1').hide();
-        $('#menu-2').fadeIn();
-        
-    });
-
-    $('#pfr-btn').click(function(){
-        //initialize variables here
-        reactorType = 'PFR';
-        reactors.push(reactorType);
-        let d, l, v1, tau1;
-
-        //displays pipe
-        displayPipe(reactorType);
-
-        //gets input from the browser
-        d = Number(document.getElementById("pfrDia").value);
-        l = Number(document.getElementById("pfrLen").value);
-        
-        v1 = pfrVol(d, l); 
-        tau1 = v1 / (Fa + Fb);   
-        tau += tau1;
-        Xa = pfr(k1, Ca0, Cb0, tau1, Xa);
-        
-    });
-    
-    $('#cstr-btn').click(function(){
-        //initialize variables here
-        reactorType = 'CSTR';
-        reactors.push(reactorType);
-        let v2, tau2;
-        
-        //displays pipe
-        displayPipe(reactorType);
-        
-        //gets input from the browser
-        v2 = Number(document.getElementById('cstrVol').value);
-        
-        tau2 = v2 / (Fa + Fb);    
-        tau += tau2;
-        Xa = cstr(k1, Ca0, Cb0, tau2, Xa);
-    });
-
-    $('#draw-btn').click(function () {
-        flag = true; // for preventing directly going to datasheet
-
-        let tauMin = Math.floor(tau*0.1/reactors.length);
-        let tauMax = Math.floor(tau*10/reactors.length);
-        let increment = Math.ceil((tauMax - tauMin)/dataSize);
-        
-        for(let i=0; i<reactors.length; i++){
-            let j=0;
-            for(let currTau=tauMin; currTau<=tauMax; currTau+=increment){
-                tau_data[j] += currTau;
-                if(reactors[i] === 'CSTR') {
-                    Xa_data1[j] = cstr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
-                    Xa_data2[j] = cstr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
-                    Xa_data3[j] = cstr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
-                }
-                else {
-                    Xa_data1[j] = pfr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
-                    Xa_data2[j] = pfr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
-                    Xa_data3[j] = pfr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
-                }
-                j++;
-            }
-        }
-        
-        // code to display
-        $('#res-config').show();
-        $('#res-1').html(Xa.toPrecision(6));
-        $('#res-2').html(tau.toPrecision(6) + ' s');
-        
-        // code to display chart
-        chart = new Chart(myChart, {
-            type: 'line',
-            data: {
-                labels: tau_data,
-                datasets: [{
-                    backgroundColor: color2,
-                    borderColor: color2,
-                    data: Xa_data2,
-                    fill: false,
-                    label: 'T = '+ temp2 + '°C' ,
-                }, {
-                    backgroundColor: color1,
-                    borderColor: color1,
-                    data: Xa_data1,
-                    fill: false,
-                    label: 'T = '+ temp1 + '°C',
-                }, {
-                    backgroundColor: color3,
-                    borderColor: color3,
-                    data: Xa_data3,
-                    fill: false,
-                    label: 'T = '+ temp3 + '°C',
-                }]
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    ticks: {    
-                        stepSize: 15
-                    },
-                    yAxes: [{
-                        display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Conversion, Xa"
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }],
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: "Overall residence time, 𝜏 (s)"
-                        }
-                    }]
-                }
-            }
-        });    
-    });
-
-    $('#data-btn').click(function(){
-        if(flag === false){
-            if(confirm('Are you sure?')){
-                $('#draw-btn').click();
-                flag = true;
-            }
-            else {
-                flag = false;
-            }
-        }
-        if(flag === true){
-            let chartdata = [Xa_data1, tau_data];
-            localStorage.setItem('chartdata', JSON.stringify(chartdata));
-            window.open('datasheet');
-            return false;
-        }
-        
-    });
-
-    // $('#reset-btn').click(function(){
-    //     if(confirm('Are you sure?')){
-    //         str = '';
-    //         $('.reactor-display').html(str);
-    //         tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
-    //         Xa = 0, tau = 0;
-    //         $('#res-config').hide();
-    //         chart.update();
-    //     }
-    // });
-});
-
