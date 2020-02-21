@@ -139,16 +139,19 @@ function displayPipe(reactorType){
 
 
 $(function(){
-    let reactorType;
-    let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0;
+    let flag = false, reactorType;
+    let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0, Xa=0;
     let reactors = [];
-    let Xa=0;
     
     //variables for displaying the chart
     let tau=0, dataSize = 25;
     let tau_data = new Array(dataSize), Xa_data1 = new Array(dataSize), Xa_data2 = new Array(dataSize), Xa_data3 = new Array(dataSize);
     tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
 
+    /*
+    *  
+    *
+    */
     $('#next-btn').click(function (){
         Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
         Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
@@ -206,7 +209,8 @@ $(function(){
     });
 
     $('#draw-btn').click(function () {
-        
+        flag = true; // for preventing directly going to datasheet
+
         let tauMin = Math.floor(tau*0.1/reactors.length);
         let tauMax = Math.floor(tau*10/reactors.length);
         let increment = Math.ceil((tauMax - tauMin)/dataSize);
@@ -229,11 +233,12 @@ $(function(){
             }
         }
         
-
+        // code to display
         $('#res-config').show();
         $('#res-1').html(Xa.toPrecision(6));
         $('#res-2').html(tau.toPrecision(6) + ' s');
-
+        
+        // code to display chart
         chart = new Chart(myChart, {
             type: 'line',
             data: {
@@ -286,10 +291,22 @@ $(function(){
     });
 
     $('#data-btn').click(function(){
-        let chartdata = [Xa_data1, tau_data];
-        localStorage.setItem('chartdata', JSON.stringify(chartdata));
-        window.open('datasheet');
-        return false;
+        if(flag === false){
+            if(confirm('Are you sure?')){
+                $('#draw-btn').click();
+                flag = true;
+            }
+            else {
+                flag = false;
+            }
+        }
+        if(flag === true){
+            let chartdata = [Xa_data1, tau_data];
+            localStorage.setItem('chartdata', JSON.stringify(chartdata));
+            window.open('datasheet');
+            return false;
+        }
+        
     });
 
     // $('#reset-btn').click(function(){
@@ -301,10 +318,6 @@ $(function(){
     //         $('#res-config').hide();
     //         chart.update();
     //     }
-    //     else {
-    //         console.log('reset denied');
-    //     }
-
     // });
 });
 
