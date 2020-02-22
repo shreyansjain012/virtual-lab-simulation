@@ -757,7 +757,6 @@ function getRandList(){
     randList.push(a[i]);
     a[i] = a[len-n];
   }
-  console.log(randList);
   return randList;
 }
 
