@@ -3,6 +3,7 @@
 <div class="container text-center">
     <table id="table-1">
         <tr>
+            <th>S.No</th>
             <th>τ (s)</th>
             <th>Xa (<%= temps[2] %>°C)</th>
             <th>Xa (<%= temps[0] %>°C)</th>
@@ -10,6 +11,7 @@
         </tr>
         <% for(let i=0; i<tau_data.length; i++) { %>
             <tr>
+                <td><%= i+1 %></td>
                 <td><%= tau_data[i] %></td>
                 <td><%= Xa_data[2][i].toPrecision(3) %></td>
                 <td><%= Xa_data[0][i].toPrecision(3) %></td>
