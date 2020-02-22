@@ -13,7 +13,7 @@ const myChart = document.getElementById('canvas-1').getContext('2d');
 let chart;
 
 $(function(){
-    let flag = false, reactorType, reactors = [];
+    let type, reactors = [];
     let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0, Xa=0;
 
     function setparmeters(){
@@ -42,6 +42,18 @@ $(function(){
         tau1 = v1 / (Fa + Fb);   
         tau += tau1;
         Xa = pfr(k1, Ca0, Cb0, tau1, Xa);
+
+        let reactor = {
+            type: 'PFR',
+            d: d,
+            l: l,
+            v: v1,
+            tau: tau1,
+            Xa: Xa
+        }
+
+        reactors.push(reactor);
+
     }
     
     function setcstr(){
@@ -52,6 +64,14 @@ $(function(){
         tau += tau2;
         Xa = cstr(k1, Ca0, Cb0, tau2, Xa);
 
+        let reactor = {
+            type: 'CSTR',
+            v: v2,
+            tau: tau2,
+            Xa: Xa
+        }
+
+        reactors.push(reactor);
     }
 
     function displayResult(){
@@ -82,7 +102,7 @@ $(function(){
             let j=0;
             for(let currTau=tauMin; currTau<=tauMax; currTau+=increment){
                 tau_data[j] += currTau;
-                if(reactors[i] === 'CSTR') {
+                if(reactors[i].type === 'CSTR') {
                     Xa_data1[j] = cstr(k1, Ca0, Cb0, currTau, Xa_data1[j]);
                     Xa_data2[j] = cstr(k2, Ca0, Cb0, currTau, Xa_data2[j]);
                     Xa_data3[j] = cstr(k3, Ca0, Cb0, currTau, Xa_data3[j]);
@@ -124,25 +144,23 @@ $(function(){
             type: 'POST',
             data: JSON.stringify(init),
             contentType: 'application/json',
-            url: '/api-calculation'
+            url: '/api-init'
         });
 
     });
 
     $('#pfr-btn').click(function(){
         
-        reactorType = 'PFR';
-        reactors.push(reactorType);
-        displayPipe(reactorType);
+        type = 'PFR';
+        displayPipe(type);
         setpfr();
 
     });
     
     $('#cstr-btn').click(function(){
         
-        reactorType = 'CSTR';
-        reactors.push(reactorType);
-        displayPipe(reactorType);
+        type = 'CSTR';
+        displayPipe(type);
         setcstr();       
 
     });
@@ -219,7 +237,12 @@ $(function(){
     });
 
     $('#calc-btn').click(function(){
-
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(reactors),
+            contentType: 'application/json',
+            url: '/api-calc'
+        });
     });
 
 });
@@ -249,7 +272,7 @@ function rateConstant (A,Ea,R,T) {
  */
 function pfrVol (d,l) {
     d = d/100;  // cm to m conversion
-    return pi * Math.pow(d,2) * l / 4 * 1000; 
+    return pi * Math.pow(d,2) * l / 4 * 1000; // m3 to L
 }
 
 /*
@@ -333,17 +356,17 @@ function cstr (k, Ca0, Cb0, tau2, Xa1) {
 /*
  * updates html code for pipe flow 
  * 
- * @param   (string)    reactorType     type of reactor ie. CSTR or PFR
+ * @param   (string)    type     type of reactor ie. CSTR or PFR
  *    
  * @return  (string)    updated string str
  */
 let pipehtml = '';
-function displayPipe(reactorType){
+function displayPipe(type){
     let pipeStr;
-    if(reactorType === 'PFR'){
-        pipeStr = '<div class="pipe"></div><div class="reactor blue">'+ reactorType +'</div><div class="pipe"></div>';
+    if(type === 'PFR'){
+        pipeStr = '<div class="pipe"></div><div class="reactor blue">'+ type +'</div><div class="pipe"></div>';
     }else {
-        pipeStr = '<div class="pipe"></div><div class="reactor pink">'+ reactorType +'</div><div class="pipe"></div>'; 
+        pipeStr = '<div class="pipe"></div><div class="reactor pink">'+ type +'</div><div class="pipe"></div>'; 
     }
     pipehtml += pipeStr
     $('.reactor-display').html(pipehtml).hide().fadeIn();

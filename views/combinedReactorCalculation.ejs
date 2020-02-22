@@ -3,32 +3,60 @@
 <div id="calculation" class="container border">
     <p>
         <u>Given values</u> <br>
-        F<math><sub>A</sub></math> is equal to <%= Fa.toPrecision(3) %> lps <br>
-        F<math><sub>B</sub></math> is equal to <%= Fb.toPrecision(3) %> lps <br>
-        N<math><sub>A</sub></math> is <%= Na %> N <br>
-        N<math><sub>B</sub></math> is <%= Nb %> N <br>
-        For the Temperature, T = <%= temp %>°C
+        F<math><sub>A</sub></math> is equal to <%= init.Fa.toPrecision(3) %> LPS <br>
+        F<math><sub>B</sub></math> is equal to <%= init.Fb.toPrecision(3) %> LPS <br>
+        N<math><sub>A</sub></math> is <%= init.Na %> N <br>
+        N<math><sub>B</sub></math> is <%= init.Nb %> N <br>
+        For the Temperature, T = <%= init.temp %>°C
     </p>
     <p>
         <u>Kinetic data for saponification of ethyl acetate reaction</u> <br>
-        Universal Gas constant, R is <%= kineticData.R %> J/mol.K <br>
-        Frequency factor, A is <%= kineticData.A %> l/mol.s <br>
-        Activation energy, E<math><sub>a</sub></math> is <%= kineticData.Ea %> J/mol
+        Universal Gas constant, R is <%= init.kineticData.R %> J/mol.K <br>
+        Frequency factor, A is <%= init.kineticData.A %> L/mol.s <br>
+        Activation energy, E<math><sub>a</sub></math> is <%= init.kineticData.Ea %> J/mol
     </p>
     <p>
         <u>Rate constant</u> <br>
         k = A.exp(-E<math><sub>a</sub></math>/RT) <br>
-        we get k equals to <%= k.toPrecision(5) %> l/mol.s</math>
+        we get k equals to <%= init.k.toPrecision(5) %> l/mol.s</math>
     </p>
     <p>
         <u>Initial concentration of A and B</u> <br>
         <math>C<sub>A0</sub> = F<sub>A</sub>N<sub>A</sub>/F<sub>A</sub>+F<sub>b</sub></math> <br>
-        <math>C<sub>B0</sub> = F<sub>A</sub>N<sub>B</sub>/F<sub>A</sub>+F<sub>b</sub></math>
+        <math>C<sub>B0</sub> = F<sub>A</sub>N<sub>B</sub>/F<sub>A</sub>+F<sub>b</sub></math> <br>
+        from this we get, <br>
+        <math>C<sub>A0</sub></math> = <%= init.Ca0 %> <br> 
+        <math>C<sub>B0</sub></math> = <%= init.Cb0 %> <br>
     </p>
-
-    <p>
-        
-    </p>
+        <% for(let i=0; i<reactors.length; i++){ %>
+            <p>
+                <u>For Reactor-<%= i+1 %></u> <br>
+                <% if(reactors[i].type === 'CSTR') { %>
+                        Volume of CSTR, V = <%= reactors[i].v.toPrecision(5) %> L<br>
+                        residence time, τ = <math>V/F<sub>A</sub>+F<sub>B</sub></math> <br> 
+                        τ = <%= reactors[i].tau.toPrecision(5) %> s <br>
+                        <% if(i === 0) { %>
+                            initial <math>X<sub>A1</sub></math> = 0 <br>    
+                        <% } else { %> 
+                            initial <math>X<sub>A1</sub></math> = <%= reactors[i-1].Xa.toPrecision(3) %> <br>
+                        <% } %> 
+                            <math>X<sub>A2</sub></math> = <%= reactors[i].Xa.toPrecision(3) %> <br>
+                <% } else { %>
+                        Length of PFR, l = <% reactors[i].l %> m<br>
+                        Diameter of PFR, d = <% reactors[i].d %> cm <br>
+                        Volume of PFR, V = <math>πld<sup>2</sup>/40</math> <br>
+                        V = <%= reactors[i].v.toPrecision(5) %> L <br> 
+                        residence time, τ = <math>V/F<sub>A</sub>+F<sub>B</sub></math> <br> 
+                        τ = <%= reactors[i].tau.toPrecision(5) %> s <br>
+                        <% if(i === 0) { %>
+                            initial <math>X<sub>A1</sub></math> = 0 <br>    
+                        <% } else { %> 
+                            initial <math>X<sub>A1</sub></math> = <%= reactors[i-1].Xa.toPrecision(3) %> <br>
+                        <% } %> 
+                            <math>X<sub>A2</sub></math> = <%= reactors[i].Xa.toPrecision(3) %> <br>
+                <% } %>
+            </p>
+        <% } %>
 </div>
 
 <%- include("partials/footer") -%>
