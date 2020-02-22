@@ -1,14 +1,34 @@
 <%- include("partials/header") -%>
 
-<div class="container text-center border">
-    Fa = <%= Fa %>
-    Fb = <%= Fb %>
-    Na = <%= Na %>
-    Nb = <%= Nb %>
-    Ca0 = <%= Ca0 %>
-    Cb0 = <%= Cb0 %>
-    temp = <%= temp %>
-    k = <%= k %>  
+<div id="calculation" class="container border">
+    <p>
+        <u>Given values</u> <br>
+        F<math><sub>A</sub></math> is equal to <%= Fa.toPrecision(3) %> lps <br>
+        F<math><sub>B</sub></math> is equal to <%= Fb.toPrecision(3) %> lps <br>
+        N<math><sub>A</sub></math> is <%= Na %> N <br>
+        N<math><sub>B</sub></math> is <%= Nb %> N <br>
+        For the Temperature, T = <%= temp %>°C
+    </p>
+    <p>
+        <u>Kinetic data for saponification of ethyl acetate reaction</u> <br>
+        Universal Gas constant, R is <%= kineticData.R %> J/mol.K <br>
+        Frequency factor, A is <%= kineticData.A %> l/mol.s <br>
+        Activation energy, E<math><sub>a</sub></math> is <%= kineticData.Ea %> J/mol
+    </p>
+    <p>
+        <u>Rate constant</u> <br>
+        k = A.exp(-E<math><sub>a</sub></math>/RT) <br>
+        we get k equals to <%= k.toPrecision(5) %> l/mol.s</math>
+    </p>
+    <p>
+        <u>Initial concentration of A and B</u> <br>
+        <math>C<sub>A0</sub> = F<sub>A</sub>N<sub>A</sub>/F<sub>A</sub>+F<sub>b</sub></math> <br>
+        <math>C<sub>B0</sub> = F<sub>A</sub>N<sub>B</sub>/F<sub>A</sub>+F<sub>b</sub></math>
+    </p>
+
+    <p>
+        
+    </p>
 </div>
 
 <%- include("partials/footer") -%>

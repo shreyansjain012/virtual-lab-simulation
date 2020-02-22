@@ -305,3 +305,10 @@ ul.responses li.incorrect p span {
     padding: 20px 40px;
 } 
 /* datasheet css ends
+
+/* combinedReactorCalculation */
+#calculation p{
+    font-size: 18px;
+    font-family: 'Slabo 27px';
+}
+/* ends */

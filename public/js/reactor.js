@@ -112,6 +112,11 @@ $(function(){
             temp: temp1,
             Ca0: Ca0,
             Cb0: Cb0,
+            kineticData: {
+                A: A,
+                Ea: Ea,
+                R: R
+            },
             k: k1
         };
 
