@@ -2,8 +2,25 @@
 
 <div class="container text-center">
     <table id="table-1">
-
+        <tr>
+            <th>Tau(s)</th>
+            <th>Xa(<%= temps[2] %>°C)</th>
+            <th>Xa(<%= temps[0] %>°C)</th>
+            <th>Xa(<%= temps[1] %>°C)</th>
+        </tr>
+        <% for(let i=0; i<tau_data.length; i++) { %>
+            <tr>
+                <td><%= tau_data[i] %></td>
+                <td><%= Xa_data[2][i].toPrecision(3) %></td>
+                <td><%= Xa_data[0][i].toPrecision(3) %></td>
+                <td><%= Xa_data[1][i].toPrecision(3) %></td>
+            </tr>
+        <% } %>
     </table>
 </div>
-<script src="/js/datasheet.js"></script>
+<script>
+    $('#table-1 tr td').addClass('border');
+    $('#table-1 tr th').addClass('border');
+</script>
+<!-- <script src="/js/datasheet.js"></script> -->
 <%- include("partials/footer") -%>
