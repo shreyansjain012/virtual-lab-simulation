@@ -181,28 +181,16 @@ $(function(){
         });    
     });
 
-    $('#data-btn').click(async function(){
-        
-        if(flag === false){
-            if(confirm('Are you sure?')){
-                $('#draw-btn').click();
-                flag = true;
-            }
-            else {
-                flag = false;
-            }
-        }
-        if(flag === true){
-            let temps = [temp1, temp2, temp3];
-            let Xa_data = [Xa_data1, Xa_data2, Xa_data3];
-            let data = {tau_data, Xa_data, temps}
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                url: '/datasheet',						
-            });
-        } 
+    $('#data-btn').click(function(){
+        let temps = [temp1, temp2, temp3];
+        let Xa_data = [Xa_data1, Xa_data2, Xa_data3];
+        let data = {tau_data, Xa_data, temps}
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            url: '/datasheet',						
+        });
     });
 });
 
