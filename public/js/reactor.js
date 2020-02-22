@@ -97,11 +97,30 @@ $(function(){
         }
     }
 
+
     $('#next-btn').click(function (){
         
         setparmeters();
         $('#menu-1').hide();
         $('#menu-2').fadeIn();
+        
+        const init = {
+            Fa: Fa,
+            Fb: Fb,
+            Na: Na,
+            Nb: Nb,
+            temp: temp1,
+            Ca0: Ca0,
+            Cb0: Cb0,
+            k: k1
+        };
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(init),
+            contentType: 'application/json',
+            url: '/api-calculation'
+        });
 
     });
 
@@ -182,16 +201,22 @@ $(function(){
     });
 
     $('#data-btn').click(function(){
-        let temps = [temp1, temp2, temp3];
-        let Xa_data = [Xa_data1, Xa_data2, Xa_data3];
-        let data = {tau_data, Xa_data, temps}
+        const temps = [temp1, temp2, temp3];
+        const Xa_data = [Xa_data1, Xa_data2, Xa_data3];
+        const chartdata = {tau_data, Xa_data, temps};
+
         $.ajax({
             type: 'POST',
-            data: JSON.stringify(data),
+            data: JSON.stringify(chartdata),
             contentType: 'application/json',
-            url: '/datasheet',						
+            url: '/api-chartdata'						
         });
     });
+
+    $('#calc-btn').click(function(){
+
+    });
+
 });
 
 /*

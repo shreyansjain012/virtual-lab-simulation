@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-let data;
+let chartdata, init;
 // handle get requests here
 app.get('/', function(req, res) {
   res.render('index');
@@ -41,22 +41,21 @@ app.get('/video', function(req, res) {
   res.render('video');
 });
 
-app.get('/calculation', function(req, res){
-  res.render('calculation');
+app.get('/combinedReactorCalculation', function(req, res) {
+  res.render('combinedReactorCalculation', init)
 });
 
 app.get('/datasheet', function(req, res) {
-  res.render('datasheet',{
-    tau_data: data.tau_data,
-    Xa_data: data.Xa_data,
-    temps: data.temps
-  });
+  res.render('datasheet', chartdata);
 });
 
-app.post('/datasheet', function(req, res){
-  data = req.body;
+app.post('/api-chartdata', function(req, res){
+  chartdata = req.body;
 });
 
+app.post('/api-calculation', function(req, res) {
+  init = req.body;
+});
 
 // Does not require changes
 app.listen(3000, function() {
