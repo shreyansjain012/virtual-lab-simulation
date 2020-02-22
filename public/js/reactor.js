@@ -17,6 +17,7 @@ $(function(){
     let Fa, Fb, Na, Nb, k1, k2, k3, temp1, temp2, temp3, Ca0, Cb0, Xa=0;
 
     function setparmeters(){
+
         Fa = Number(document.getElementById("fa").value)/(60*60); // converting LPH in LPS
         Fb = Number(document.getElementById("fb").value)/(60*60); // converting LPH in LPS
         Na = Number(document.getElementById("na").value);
@@ -29,9 +30,11 @@ $(function(){
         k3 = rateConstant(A, Ea, R, temp3);
         Ca0 = getCa0(Fa, Fb, Na, Nb);
         Cb0 = getCb0(Fa, Fb, Na, Nb);
+
     }
 
     function setpfr(){
+
         let d, l, v1, tau1;
         d = Number(document.getElementById("pfrDia").value);
         l = Number(document.getElementById("pfrLen").value);
@@ -42,11 +45,13 @@ $(function(){
     }
     
     function setcstr(){
+
         let v2, tau2;
         v2 = Number(document.getElementById('cstrVol').value);
         tau2 = v2 / (Fa + Fb);    
         tau += tau2;
         Xa = cstr(k1, Ca0, Cb0, tau2, Xa);
+
     }
 
     function displayResult(){
@@ -104,7 +109,6 @@ $(function(){
         
         reactorType = 'PFR';
         reactors.push(reactorType);
-        
         displayPipe(reactorType);
         setpfr();
 
@@ -114,7 +118,6 @@ $(function(){
         
         reactorType = 'CSTR';
         reactors.push(reactorType);
-        
         displayPipe(reactorType);
         setcstr();       
 
@@ -178,7 +181,7 @@ $(function(){
         });    
     });
 
-    $('#data-btn').click(function(){
+    $('#data-btn').click(async function(){
         
         if(flag === false){
             if(confirm('Are you sure?')){
@@ -190,24 +193,10 @@ $(function(){
             }
         }
         if(flag === true){
-            let chartdata = [Xa_data1, tau_data];
-            localStorage.setItem('chartdata', JSON.stringify(chartdata));
-            window.open('datasheet');
-            return false;
-        }
-        
+            let data = {tau_data, Xa_data1, Xa_data2, Xa_data3}
+            localStorage.setItem('data', JSON.stringify(data));
+        } 
     });
-
-    // $('#reset-btn').click(function(){
-    //     if(confirm('Are you sure?')){
-    //         str = '';
-    //         $('.reactor-display').html(str);
-    //         tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
-    //         Xa = 0, tau = 0;
-    //         $('#res-config').hide();
-    //         chart.update();
-    //     }
-    // });
 });
 
 /*
@@ -267,7 +256,7 @@ function getCb0 (Fa, Fb, Na, Nb){
  * @param   (Number)    Ca0     initial conc. of A
  * @param   (Number)    Cb0     initial conc. of B
  * @param   (Number)    tau1    time constant of PFR
- * @param   (Number)    Xa1     conversion from previous reactor
+ * @param   (Number)    Xa      conversion from previous reactor
  *    
  * @return  (Number)    conversion from PFR
  */
@@ -294,7 +283,7 @@ function pfr (k, Ca0, Cb0, tau1, Xa1) {
  * @param   (Number)    Ca0     initial conc. of A
  * @param   (Number)    Cb0     initial conc. of B
  * @param   (Number)    tau2    time constant of CSTR
- * @param   (Number)    Xa1     conversion from previous reactor
+ * @param   (Number)    Xa      conversion from previous reactor
  *    
  * @return  (Number)    conversion from CSTR 
  */
@@ -334,3 +323,14 @@ function displayPipe(reactorType){
     pipehtml += pipeStr
     $('.reactor-display').html(pipehtml).hide().fadeIn();
 }
+
+    // $('#reset-btn').click(function(){
+    //     if(confirm('Are you sure?')){
+    //         str = '';
+    //         $('.reactor-display').html(str);
+    //         tau_data.fill(0), Xa_data1.fill(0), Xa_data2.fill(0), Xa_data3.fill(0);
+    //         Xa = 0, tau = 0;
+    //         $('#res-config').hide();
+    //         chart.update();
+    //     }
+    // });

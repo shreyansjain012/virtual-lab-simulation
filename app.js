@@ -10,10 +10,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
-// import local js files here
-// const combinedReactor = require(__dirname + "/combinedReactors.js");
-
 // handle get requests here
 app.get('/', function(req, res) {
   res.render('index');
@@ -51,7 +47,6 @@ app.get('/calculation', function(req, res){
   res.render('calculation');
 });
 
-// handle post requests here
 
 // Does not require changes
 app.listen(3000, function() {
