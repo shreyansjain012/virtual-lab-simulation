@@ -8,7 +8,7 @@
         <%let j=1  %> 
         <% experiments.forEach(experiment => { %>
             <div class="experiment">
-                <h4><%= j %>. <a href="<%= experiment.link %>"><%= experiment.name %></a></h4>
+                <h4><a href="<%= experiment.link %>"><%= j %>. <%= experiment.name %></a></h4>
             </div>
             <% j++ %>     
         <% }) %>

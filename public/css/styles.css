@@ -324,20 +324,21 @@ ul.responses li.incorrect p span {
 
 /* navbar */
 .top-logo {
-    height: 120px;
+    height: 90px;
     background: white;
 }
 .top-logo img {
-    height: 110px;
-    padding: 5px;
-    margin: 5px 20px;
+    height: 90px;
+    /* padding: 5px; */
+    margin: 0px 20px;
+    border-radius: 5px;
 }
 .top-logo *{
     display: inline;
 }
 .top-logo h2 {
     padding: 10px;
-    margin: 30px 0px;
+    margin: 10px 0px;
     float: left;
 }
 
@@ -361,4 +362,5 @@ nav {
     color: blue;
     text-decoration: none;
 }
+
 /*  */
