@@ -1,0 +1,17 @@
+<%- include("partials/header") -%>
+<%- include("partials/navbar2") -%>
+<div class="container">
+    <a href="/">About</a> &nbsp; <a href="experimentlist">List of Experiments</a> 
+    <div>
+        <h1 class="text-center">Experiments</h1> 
+        <hr>
+        <%let j=1  %> 
+        <% experiments.forEach(experiment => { %>
+            <div class="experiment">
+                <h4><%= j %>. <a href="<%= experiment.link %>"><%= experiment.name %></a></h4>
+            </div>
+            <% j++ %>     
+        <% }) %>
+    </div>
+</div>
+<%- include("partials/footer") -%>

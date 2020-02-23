@@ -330,7 +330,7 @@ ul.responses li.incorrect p span {
 .top-logo img {
     height: 110px;
     padding: 5px;
-    margin: 5px 0px;
+    margin: 5px 20px;
 }
 .top-logo *{
     display: inline;
@@ -343,7 +343,22 @@ ul.responses li.incorrect p span {
 
 nav {
     margin-bottom: 50px;
-    /* background: rgb(134, 131, 131); */
 }
 
 /* ends */
+
+/* list of experiment */
+.experiment {
+    font-family: 'Slabo';
+    padding: 10px;
+}
+
+.experiment a {
+    text-decoration: none;
+    color: inherit;
+}
+.experiment a:hover {
+    color: blue;
+    text-decoration: none;
+}
+/*  */

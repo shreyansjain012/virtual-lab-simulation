@@ -11,7 +11,21 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-let chartdata, init, calc;
+let chartdata, init, reactors;
+const experiments = [];
+
+experiments.push({
+  name: 'Conversion in Combined Reactors',
+  link: 'theory' 
+});
+experiments.push({
+  name: 'Conversion in Combined Reactors',
+  link: 'theory' 
+});
+experiments.push({
+  name: 'Conversion in Combined Reactors',
+  link: 'theory' 
+});
 // handle get requests here
 app.get('/', function(req, res) {
   res.render('index');
@@ -41,6 +55,12 @@ app.get('/video', function(req, res) {
   res.render('video');
 });
 
+app.get('/experimentlist', function(req, res){
+  res.render('experimentlist', {
+    experiments: experiments
+  });
+});
+
 app.get('/combinedReactorCalculation', function(req, res) {
   res.render('combinedReactorCalculation', {
     init: init,
@@ -55,7 +75,6 @@ app.get('/datasheet', function(req, res) {
 app.post('/api-chartdata', function(req, res){
   chartdata = req.body;
 });
-
 
 app.post('/api-init', function(req, res) {
   init = req.body;
