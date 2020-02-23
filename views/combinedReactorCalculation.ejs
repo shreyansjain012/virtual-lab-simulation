@@ -28,7 +28,9 @@
         <math>C<sub>A0</sub></math> = <%= init.Ca0 %> <br> 
         <math>C<sub>B0</sub></math> = <%= init.Cb0 %> <br>
     </p>
+        <% let tau = 0 %>
         <% for(let i=0; i<reactors.length; i++){ %>
+            <% tau += Number(reactors[i].tau.toPrecision(6)) %>     
             <p>
                 <u>For Reactor-<%= i+1 %></u> <br>
                 <% if(reactors[i].type === 'CSTR') { %>
@@ -57,6 +59,7 @@
                 <% } %>
             </p>
         <% } %>
+        Overall residence time is equal to sum of residence time of all reactors = <%= tau %> s 
 </div>
 
 <%- include("partials/footer") -%>
