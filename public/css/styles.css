@@ -330,7 +330,7 @@ ul.responses li.incorrect p span {
 .top-logo img {
     height: 90px;
     /* padding: 5px; */
-    margin: 0px 20px;
+    margin: 0px -20px;
     border-radius: 5px;
 }
 .top-logo *{
@@ -338,7 +338,7 @@ ul.responses li.incorrect p span {
 }
 .top-logo h2 {
     padding: 10px;
-    margin: 10px 0px;
+    margin: 10px -20px;
     float: left;
 }
 
