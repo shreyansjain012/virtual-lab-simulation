@@ -337,20 +337,25 @@ function pfr (k, Ca0, Cb0, tau1, Xa1) {
  */
 function cstr (k, Ca0, Cb0, tau2, Xa1) {
     let M = Cb0/Ca0;
+    if(M<=1){
+        // solving quadratic equation ax^2 + bx + c = 0
+        let a = 1;
+        let b = (M+1)+1/(k*tau2*Ca0);
+        let c = M + Xa1/(k*tau2*Ca0);
+        let res1 = (b + Math.sqrt(b*b - 4*a*c))/(2*a);
+        let res2 = (b - Math.sqrt(b*b - 4*a*c))/(2*a);
 
-    // solving quadratic equation ax^2 + bx + c = 0
-    let a = 1;
-    let b = (M+1)+1/(k*tau2*Ca0);
-    let c = M + Xa1/(k*tau2*Ca0);
-    let res1 = (b + Math.sqrt(b*b - 4*a*c))/(2*a);
-    let res2 = (b - Math.sqrt(b*b - 4*a*c))/(2*a);
-
-    if(res1 > Xa1 && res1 <= 1){
-        return res1;
+        if(Xa1 < res1 && res1 <= 1){
+            return res1;
+        }
+        else {
+            return res2;
+        }
     }
     else {
-        return res2;
+        console.log('Flow rate of NaoH cannot be less than flow rate of Ethyl Acetate');
     }
+    
 }
 
 /*

@@ -44,9 +44,9 @@
                         <% } %> 
                             <math>X<sub>A2</sub></math> = <%= reactors[i].Xa.toPrecision(3) %> <br>
                 <% } else { %>
-                        Length of PFR, l = <% reactors[i].l %> m<br>
-                        Diameter of PFR, d = <% reactors[i].d %> cm <br>
-                        Volume of PFR, V = <math>πld<sup>2</sup>/40</math> <br>
+                        Length of PFR, l = <%= reactors[i].l %> m<br>
+                        Diameter of PFR, d = <%= reactors[i].d %> cm <br>
+                        Volume of PFR, V = <math>πl(d/100)<sup>2</sup>*1000/4</math> <br>
                         V = <%= reactors[i].v.toPrecision(5) %> L <br> 
                         residence time, τ = <math>V/F<sub>A</sub>+F<sub>B</sub></math> <br> 
                         τ = <%= reactors[i].tau.toPrecision(5) %> s <br>

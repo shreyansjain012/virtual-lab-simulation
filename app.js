@@ -18,14 +18,16 @@ experiments.push({
   name: 'Conversion in Combined Reactors',
   link: 'theory' 
 });
-experiments.push({
-  name: 'Conversion in Combined Reactors',
-  link: 'theory' 
-});
-experiments.push({
-  name: 'Conversion in Combined Reactors',
-  link: 'theory' 
-});
+
+// experiments.push({
+//   name: 'Conversion in Combined Reactors',
+//   link: 'theory' 
+// });
+// experiments.push({
+//   name: 'Conversion in Combined Reactors',
+//   link: 'theory' 
+// });
+
 // handle get requests here
 app.get('/', function(req, res) {
   res.render('index');
