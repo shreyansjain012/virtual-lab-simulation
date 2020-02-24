@@ -6,6 +6,18 @@
     text-align: justify;
 }
 
+.btn-tag {
+    padding: 2px;
+    background-color: rgb(166, 197, 255);
+    border-radius: 2px;
+}
+
+.highlight-tag{
+    border-radius: 2px;
+    background-color: lightyellow;
+    padding: 1px;
+}
+
 #sticky-footer {
     flex-shrink: none;
 }
