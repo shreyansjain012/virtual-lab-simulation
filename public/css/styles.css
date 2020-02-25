@@ -232,10 +232,7 @@ ul.responses li.incorrect p span {
         min-width: 490px;
     }
     .top-logo img {
-        height: 110px;
-        padding: 5px;
-        margin: 5px;
-        float: right;
+        height: 100px;
     }
 }
 
@@ -336,22 +333,22 @@ ul.responses li.incorrect p span {
 
 /* navbar */
 .top-logo {
-    height: 90px;
+    height: 100px;
     background: white;
+    display: flex;
 }
 .top-logo img {
-    height: 90px;
-    /* padding: 5px; */
-    margin: 0px -20px;
+    height: 95px;
     border-radius: 5px;
 }
-.top-logo *{
-    display: inline;
+.c1 {
+    flex:1;
 }
-.top-logo h2 {
-    padding: 10px;
-    margin: 10px -20px;
-    float: left;
+.c2 {
+    flex:5;
+}
+.top-logo h2{
+    padding-top: 30px;
 }
 
 nav {
