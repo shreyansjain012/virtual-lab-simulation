@@ -53,8 +53,8 @@ app.get('/postquiz', function(req, res) {
   res.render('postquiz');
 });
 
-app.get('/video', function(req, res) {
-  res.render('video');
+app.get('/references', function(req, res) {
+  res.render('references');
 });
 
 app.get('/experimentlist', function(req, res){

@@ -1,0 +1,51 @@
+<%- include("partials/header") -%>
+<%- include("partials/navbar") -%>
+<div class="container">
+    <div class="section">
+        <h4>Theory</h4> <hr>
+        <ul>
+            <li>This section includes all the basic fundamentals of PFRs and CSTRs such as their design equations, differences, combinations, etc. </li>
+            <li>This is a prerequisite for better understanding of experimentation.</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h4>Self Evaluation</h4> <hr>
+        <ul>
+            <li>This section includes 5 questions for evaluating your concepts before proceeding to the experimentation. </li>
+            <li>You are required to answer atleast 3 out of 5 questions correctly.</li>
+            <li>If your score is less than 3 please revisit the theory section.</li>
+            <li>Otherwise you can proceed to the <a href="simulation">Experimentation</a>.</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h4>Experimentation</h4> <hr>
+        <p>
+            <b>Step 1:</b> Input the flow rate of NaOH (A) and Ethyl Acetate (B). <span class="highlight-tag">(preferably in the range of 3 - 20 LPH)</span>  <br><br>
+            <span style="margin-left: 52px;"></span> <i>Please note that flow rate of NaOH should not be less than flow rate of Ethyl Acetate</i> <br> <br>
+            <b>Step 2:</b> Input the normality of NaOH (A) and Ethyl Acetate (B). <span class="highlight-tag">(preferably in the range of 0.01 - 1 N)</span>  <br><br>
+            <b>Step 3:</b> Set the temperature in the range of 25 - 40 &deg;C at which you want to conduct the experiment and then click on <span class="btn-tag">Next</span>. <br><br>
+            <b>Step 4:</b> Select any number of PFRs and CSTRs in any combination with inputs(volume) of your choice. <br>
+            <span style="margin-left: 52px;"></span>• To add a PFR choose required length and diameter and click on <span class="btn-tag">Add PFR</span> <br>
+            <span style="margin-left: 52px;"></span>• To add a CSTR choose required volume and click on <span class="btn-tag">Add CSTR</span> <br><br>
+            <b>Step 5:</b> click on Submit button to obtain final conversion and overall residence time. <br>
+            <span style="margin-left: 54px;"></span>A graph betweeen final conversion and overall residence time at 3 different temperatures (T and T ± 5 &deg;C) <br><br>
+            <b>Step 6:</b> Click on <span class="btn-tag">Calculations</span> to see the detailed calculation of the experimentation. <br><br>
+            <b>Step 7:</b> Click on <span class="btn-tag">Show Data</span> to check the data of the graph.
+        </p>
+    </div>
+    <div class="section">
+        <h4>Quiz</h4> <hr>
+            <ul>
+                <li>This section includes 5 questions based on the experiments you conducted in the experimentation section.</li>
+                <li>You are required to answer atleast 3 out of 5 questions correctly. </li>
+                <li>If your score is less than 3 you are required to repeat the experiments.</li>
+            </ul>
+    </div>
+    <div class="section">
+        <h4>References</h4> <hr>
+        <ul>
+            <li>For further reading check the references section</li>
+        </ul>
+    </div>
+</div>
+<%- include("partials/footer") -%>
