@@ -867,9 +867,9 @@ let incorrectStr = "<p><span>Wrong answer</span></p>";
 
 var quizJSON = {
     "info": {
-        "name":    "Self Evaluation",
+        "name":    "Quiz",
         "main":    "<p>Answer atleast 3 out of 5 questions correctly.</p>",
-        "results": "<p>To learn more revisit <a href='theory' target='_blank'>theory</a> and <a href='procedure' target='_blank'>procedure</a></p>",
+        "results": "<p>Completed. Click <a href='simulation'>here</a> to repeat the experiment</p>",
         "level1":  "Geek",
         "level2":  "Pro",
         "level3":  "Amateur",
