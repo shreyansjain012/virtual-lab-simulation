@@ -762,96 +762,96 @@ function getRandList(){
 
 function getQuestions(){
   let questions = [
-    "In order to achieve the same conversion under identical reaction conditions and feed flow rate for a non-autocatalytic reaction of positive order, the volume of an ideal CSTR is",
-    "For a plug flow reactor",
-    "The conversion <math>X<sub>A</sub></math> and residence time data are collected for zero order liquid phase reaction in a stirred tank reactor, which of the following will be a straight line",
-    "For a tubular reactor with space time τ and residence time θ, the following statement holds",
-    "An exothermic reaction takes place in an adiabatic reactor. The product temperature _______ the reactor feed temperature",
+    "For identical feed composition, flow rate, conversion and for all positive reaction orders, the ratio of volumes of the mixed reactor to the plug flow reactor is",
+    "For identical feed compostion and flow rate, N plug flow reactors in series with a total volume V gives the same conversion as a single",
+    "The optimum size ratio for two mixed reactors in series is found in general to be dependent on the kinetics of the reaction and on the conversion level. For reaction order more than one",
+    "A first order reaction is to be treated in a series of two mixed reactors. The total volume of the two reactors is minimum, when the reactors are",
+    "With increase in the space time of an irreversible isothermal reaction being carried out in a PFR, the conversion will",
+    "A first order reaction requires two equal sized CSTR. The conversion is",
     "The most unsuitable reactor for carrying out reactions in which high reactant concentration favors high yields is",
-    "A reversible liquid phase endothermic reaction is to be carried out in a plug flow reactor. For minimum reactor volume, it should be operated such that the temperature along the length",
-    "'N' plug flow reactors in series with a total volume 'V' gives the same conversion as a single plug flow reactor of volume 'V' for __________ order reactions.",
-    "The ratio of volume of mixed reactor to the volume of PFR (for identical flow rate, feed composition and conversion) for zero order reaction is",
-    "For the liquid phase zero order irreversible reaction A &rarr; B, the conversion of A in a CSTR is found to be 0.3 at a space velocity of 0.1min <math><sup>-1</sup></math> . What will be the conversion for a PFR with a space velocity of 0.2 min <math><sup>-1</sup></math> ? Assume that all the other operating conditions are the same for CSTR and PFR.",
-    "A stirred tank reactor compared to tubular-flow reactor provides"
+    "The sequence in which three CSTR’s of volumes 5, 10 and 15 m3 will be connected in series to obtain the maximum production in a negative second order irreversible reaction is",
+    "The performance of a cascade of CSTR's can be improved by adding",
+    "Pick out the wrong statement",
+    "The graph of overall conversion vs overall residence time for a series of reactors shifts to a _______ value of conversion for same value of residence time when temperature is increased."
   ];
 
   let options = [
   //1
     [
-      {"option": "always greater than that of an ideal PFR",      "correct": true},
-      {"option": "always smaller than that of an ideal PFR",     "correct": false},
-      {"option": "same as that of an ideal PFR",      "correct": false},
-      {"option": "smaller than that of an ideal PFR only for first order reaction",     "correct": false} // no comma here
+      {"option": "always one",      "correct": false},
+      {"option": "always less than one",     "correct": false},
+      {"option": "always greater than one",      "correct": true},
+      {"option": "equal to the order of reaction.",     "correct": false} // no comma here
     ],
   //2
     [
-      {"option": "axial diffusivity is zero, radial diffusivity is zero",      "correct": false},
-      {"option": "axial diffusivity is zero, radial diffusivity is infinite",     "correct": true},
-      {"option": "axial diffusivity is infinite, radial diffusivity is zero",      "correct": false},
-      {"option": "axial diffusivity is zero, radial diffusivity is infinite",     "correct": false} // no comma here
+      {"option": "plug flow reactor of volume V",      "correct": false},
+      {"option": "CSTR of volume V",     "correct": false},
+      {"option": "plug flow reactor of volume V/N",      "correct": false},
+      {"option": "plug flow reactor of volume NV.",     "correct": true} // no comma here
     ],
   //3
     [
-      {"option": "XA vs τ",      "correct": true},
-      {"option": "XA vs ln τ",     "correct": false},
-      {"option": "XA/(1-XA) vs τ",      "correct": false},
-      {"option": "XA(1-XA) vs τ",     "correct": false} // no comma here
+      {"option": "the larger reactor should come first",      "correct": false},
+      {"option": "the smaller reactor should come first",     "correct": true},
+      {"option": "equal size reactors are best",      "correct": false},
+      {"option": "doesnot matter",     "correct": false} // no comma here
     ],
   //4
     [
-      {"option": "τ and θ are always equal",      "correct": false},
-      {"option": "τ = θ when the fluid density changes in the reactor",     "correct": false},
-      {"option": "τ = θ for an isothermal tubular reactor in which the density of the process fluid is constant",      "correct": true},
-      {"option": "τ = θ for a non-isothermal reactor",     "correct": false} // no comma here
+      {"option": "equal in size",      "correct": true},
+      {"option": "of different sizes",     "correct": false},
+      {"option": "of such size that the ratio of their volumes is <5",      "correct": false},
+      {"option": "none of these",     "correct": false} // no comma here
     ],
   //5
     [
-      {"option": "is always equal to",      "correct": false},
-      {"option": "is always greater than",     "correct": true},
-      {"option": "is always less than",      "correct": false},
-      {"option": "may be greater or less than",     "correct": false} // no comma here
+      {"option": "Increase",      "correct": true},
+      {"option": "Decrease",     "correct": false},
+      {"option": "Remain Same",      "correct": false},
+      {"option": "Data is insufficient; can’t be predicted",     "correct": false} // no comma here
     ],
   //6
     [
-      {"option": "Backmix reactor",      "correct": true},
-      {"option": "Plug flow reactor",     "correct": false},
-      {"option": "Series of CSTR",      "correct": false},
-      {"option": "PFR in series",     "correct": false} // no comma here
+      {"option": "More when they are connected in parallel",      "correct": false},
+      {"option": "More when they are connected in series",     "correct": true},
+      {"option": "Same whether they are connected in series or in parallel",      "correct": false},
+      {"option": "None of the above",     "correct": false} // no comma here
     ],
   //7
     [
-      {"option": "decreases",      "correct": false},
-      {"option": "increases",     "correct": false},
-      {"option": "is at the highest allowable temperature throughout",      "correct": true},
-      {"option": "first increases then decreases",     "correct": false} // no comma here
+      {"option": "Backmix reactor",      "correct": true},
+      {"option": "Plug flow reactor",     "correct": false},
+      {"option": "Series of CSTRs",      "correct": false},
+      {"option": "PFR in series",     "correct": false} // no comma here
     ],
   //8
     [
-      {"option": "first",      "correct": false},
-      {"option": "second",     "correct": false},
-      {"option": "third",      "correct": false},
-      {"option": "any",        "correct": true} // no comma here
+      {"option": "15,10,5",      "correct": true},
+      {"option": "5,10,15",     "correct": false},
+      {"option": "10,5,15",      "correct": false},
+      {"option": "10,15,5",        "correct": false} // no comma here
     ],
   //9
     [
-      {"option": "Infinite",      "correct": false},
-      {"option": "0",      "correct": false},
-      {"option": "1",      "correct": true},
-      {"option": ">1",     "correct": false} // no comma here
+      {"option": "a PFR in series.",      "correct": false},
+      {"option": "a PFR in parallel.",      "correct": false},
+      {"option": "more CSTR's in series.",      "correct": true},
+      {"option": "more CSTR's in parallel.",     "correct": false} // no comma here
     ],
   //10
     [
-      {"option": "0.15",     "correct": false},
-      {"option": "0.30",     "correct": false},
-      {"option": "0.60",     "correct": true},
-      {"option": "0.90",     "correct": false} // no comma here
+      {"option": "Space time in a flow reactor is a measure of its capacity and is equal to the residence time when the density of the reaction mixture is constant.",     "correct": false},
+      {"option": "The best combination of three reactors in series for obtaining maximum conversion is small CSTR, large CSTR, plug in the order mentioned for reaction order less than 1.",     "correct": true},
+      {"option": "Mixed reactor is always smaller than the plug flow reactor for all negative reaction orders for a particular duty.",     "correct": false},
+      {"option": "In plug flow, the concentration of reactant decreases progressively through the system, whereas in mixed flow, the concentration drops immediately to a low value.",     "correct": false} // no comma here
     ],
   //11
     [
-      {"option": "more uniform operating conditions.",  "correct": false},
-      {"option": "permits operation at the optimum temperature for a long reaction time.",  "correct": false},
-      {"option": "higher overall selectivity for a first order consecutive reaction.",  "correct": false},
-      {"option": "all the above", "correct": true} // no comma here
+      {"option": "higher",  "correct": true},
+      {"option": "same",  "correct": false},
+      {"option": "inadequate",  "correct": false},
+      {"option": "can’t be predicted", "correct": false} // no comma here
     ],
   ];
 
