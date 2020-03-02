@@ -42,7 +42,9 @@
                         <% } else { %> 
                             initial <math>X<sub>A1</sub></math> = <%= reactors[i-1].Xa.toPrecision(3) %> <br>
                         <% } %> 
-                            <math>X<sub>A2</sub></math> = <%= reactors[i].Xa.toPrecision(3) %> <br>
+                        Design Equation: &nbsp;<img src="images/cstr.gif" alt="cstr-design-eqn"> <br>
+                        By putting the values and solving the equation for X<math><sub>A</sub></math> we get <br>
+                        <math>X<sub>A2</sub></math> = <%= reactors[i].Xa.toPrecision(3) %> <br>
                 <% } else { %>
                         Length of PFR, l = <%= reactors[i].l %> m<br>
                         Diameter of PFR, d = <%= reactors[i].d %> cm <br>
@@ -55,6 +57,15 @@
                         <% } else { %> 
                             initial <math>X<sub>A1</sub></math> = <%= reactors[i-1].Xa.toPrecision(3) %> <br>
                         <% } %> 
+                        <img src="images/M.gif" alt="M"> <br>
+                        <% if(init.Cb0/init.Ca0 !=  1) { %>
+                            if M is not equal to 1 then: <br>
+                            Design Equation: &nbsp;<img src="images/pfr.gif" alt="cstr-design-eqn"> <br>
+                        <% } else { %>
+                            if M is equal to 1 then: <br>
+                            Design Equation: &nbsp;<img src="images/pfr2.gif" alt="cstr-design-eqn"> <br>
+                        <% } %>
+                            By putting the values and solving the equation for X<math><sub>A</sub></math> we get <br>
                             <math>X<sub>A2</sub></math> = <%= reactors[i].Xa.toPrecision(3) %> <br>
                 <% } %>
             </p>
