@@ -87,6 +87,6 @@ app.post('/api-calc', function(req, res) {
 });
 
 // Does not require changes
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log('Server started on port 3000');
 });
