@@ -3,11 +3,11 @@
 <div class="container">
     <a href="/">About</a> &nbsp; <a href="experimentlist">List of Experiments</a> 
     <div>
-        <h1 class="text-center">Experiments</h1> 
+        <h1 class="text-center">Select Experiment</h1> 
         <hr>
         <%let j=1  %> 
         <% experiments.forEach(experiment => { %>
-            <div class="experiment">
+            <div class="experiment" style="color: red">
                 <h4><a href="<%= experiment.link %>"><%= j %>. <%= experiment.name %></a></h4>
             </div>
             <% j++ %>     
