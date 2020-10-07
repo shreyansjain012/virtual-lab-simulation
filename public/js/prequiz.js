@@ -792,10 +792,10 @@ function getQuestions(){
     ],
   //3
     [
-      {"option": "XA vs τ",      "correct": true},
-      {"option": "XA vs ln τ",     "correct": false},
-      {"option": "XA/(1-XA) vs τ",      "correct": false},
-      {"option": "XA(1-XA) vs τ",     "correct": false} // no comma here
+      {"option": "X"+"A".sub()+ "vs τ",      "correct": true},
+      {"option": "X"+"A".sub()+ "vs ln τ",     "correct": false},
+      {"option": "X"+"A".sub()+ "/(1-X"+"A".sub()+ ") vs τ",      "correct": false},
+      {"option": "X"+"A".sub()+ "(1-X"+"A".sub()+ ") vs τ",     "correct": false} // no comma here
     ],
   //4
     [
